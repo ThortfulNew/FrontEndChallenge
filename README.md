@@ -6,11 +6,17 @@ Also, display the available issues of a repository in a separate section in the 
 
 * Implement the best design possible for the user interface - search and search results, and issues section.
 * You can use Twitter Bootstrap and any JavaScript libraries to support AngularJS (Underscore etc).
-* Use best practices in writing JavaScript / Coffeescript, CSS, and HTML. 
+* Use best practices in writing JavaScript / Coffeescript, CSS, and HTML.
 * Write clearly and use proper MVC structure to write the application.
 
 Bonus: Add another section for visualisation chart (using a JavaScript charting library that you already know) for the number of forks, open issues, stargazer count, watchers count, or any relevant information about the repository.
 
+Few useful URLs:
+* Sample API URL to search by repository name	https://api.github.com/search/repositories?q=bootstrap
+* API URL to display issues of a repository name	https://api.github.com/search/issues?q=repo:username/reponame
+* Example: Display Issues of Bootstrap	https://api.github.com/search/issues?q=repo:twbs/bootstrap
+* API Documentation	https://developer.github.com/v3/search/#search-issues
+* GItHub Search API Documentation	https://developer.github.com/v3/search/ 
 
 We could be sneaky and not say anything else, but here's some things we're looking to see:
 
