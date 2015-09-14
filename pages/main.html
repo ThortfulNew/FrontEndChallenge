@@ -7,6 +7,11 @@
   </span>
 </div>
 
+<div class="alert alert-warning" ng-if="rateLimitInfo.remaining">
+  GitHub limits API queries; remaining: {{ rateLimitInfo.remaining }}
+  (<a href="https://developer.github.com/v3/search/#rate-limit">more info</a>)
+</div>
+
 <h3>Search Results</h3>
 <div class="list-group">
     <repo-directive repo="repo" ng-repeat="repo in repos"></repo-directive>

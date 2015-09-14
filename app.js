@@ -19,19 +19,68 @@ GitHubApp.config(function($routeProvider){
 GitHubApp.factory('RepoService', ['$resource',
   function($resource) {
 
-    function _arrayFromGithubAPI(data) {
-      return JSON.parse(data).items;
-    }
-
     var repoService = {};
 
+    repoService.paginationInfo = {};
+    repoService.paginationInfo.currentPage = 1;
+    repoService.paginationInfo.totalPages = 1;
+
+    repoService.rateLimitInfo = {};
+    repoService.rateLimitInfo.limit = null;
+    repoService.rateLimitInfo.remaining = null;
+
     repoService._repos = [];
+
+    /**
+     * Github provides a special Link header on paginated API responses
+     * based on: https://gist.github.com/niallo/3109252#gistcomment-1474669 
+     */
+    function _parseLinkHeader(header) {
+      if (header.length === 0) {
+        throw new Error("input must not be of zero length");
+      }
+      var parts = header.split(',');
+      var links = {};
+      for(var i=0; i<parts.length; i++) {
+        var section = parts[i].split(';');
+        if (section.length !== 2) {
+          throw new Error("section could not be split on ';'");
+        }
+        var url = section[0].replace(/<(.*)>/, '$1').trim();
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+        links[name] = url;
+      }
+      return links;
+    }
+
+    function _getNrOfPages(links) {
+      if(links.last) {
+        var regex = /&page=(\d+)/;
+        return links.last.match(regex)[1];
+      }
+    }
+
     repoService._resource = $resource(
       "https://api.github.com/search/repositories?q=:q", {}, {
         query: {
           method: 'GET',
           isArray: true,
-          transformResponse: _arrayFromGithubAPI
+          transformResponse: function(data, headers){
+            var headers = headers();
+            console.log(headers);
+            if(headers['link']) {
+              var links = _parseLinkHeader(headers['link']);
+              repoService.nrOfPages = _getNrOfPages(links);
+              repoService.nextPage = links.next;
+            }
+            if(headers['x-ratelimit-limit']){
+              repoService.rateLimitInfo.limit = parseInt(headers['x-ratelimit-limit']);
+            }
+            if(headers['x-ratelimit-remaining']){
+              repoService.rateLimitInfo.remaining = parseInt(headers['x-ratelimit-remaining']);
+            }
+            return JSON.parse(data).items;
+          }
         }
       }           
     );
@@ -79,11 +128,15 @@ GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'RepoSe
   function($scope, $location, $routeParams, RepoService){
 
     $scope.repos = RepoService._repos;
+    $scope.paginationInfo = RepoService.paginationInfo;
+    $scope.rateLimitInfo = RepoService.rateLimitInfo;
 
     $scope.queryRepos = function() {
       $scope.repos = [];
       RepoService.search($scope.query).then(function(repos){
         RepoService.setRepos(repos);
+        $scope.paginationInfo = RepoService.paginationInfo;
+        $scope.rateLimitInfo = RepoService.rateLimitInfo;
         $scope.repos = repos;
       });
     }
