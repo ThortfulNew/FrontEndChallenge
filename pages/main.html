@@ -1,0 +1,13 @@
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Search for repository..." ng-model="query">
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button"
+      ng-click="queryRepos()">Go!
+    </button>
+  </span>
+</div>
+
+<h3>Search Results</h3>
+<div class="list-group">
+    <repo-directive repo="repo" ng-repeat="repo in repos"></repo-directive>
+</div>

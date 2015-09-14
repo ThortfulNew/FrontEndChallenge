@@ -1,0 +1,24 @@
+doctype
+html(ng-app="GitHubApp")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title ThrotfulChallenge
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="./node_modules/bootstrap/dist/css/bootstrap.css")
+
+  body
+
+    .container
+      div(ng-controller="mainCtrl")
+        div(ng-view)
+
+    script(src="./node_modules/jquery/dist/jquery.js")
+    script(src="./node_modules/bootstrap/dist/js/bootstrap.js")
+    script(src="./node_modules/angular/angular.js")
+    script(src="./node_modules/angular-route/angular-route.js")
+    script(src="./node_modules/angular-resource/angular-resource.js")
+    script(src="./node_modules/angular-mocks/angular-mocks.js")
+    script(src="./node_modules/d3/d3.js")
+    script(src="./data.js")
+    script(src="./app.js")
