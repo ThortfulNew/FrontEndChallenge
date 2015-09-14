@@ -1,5 +1,5 @@
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Search for repository..." ng-model="query">
+  <input type="text" class="form-control" placeholder="Search for repository..." ng-model="query" dl-enter-key="queryRepos()">
   <span class="input-group-btn">
     <button class="btn btn-default" type="button"
       ng-click="queryRepos()">Go!
