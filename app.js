@@ -11,44 +11,51 @@ GitHubApp.config(function($routeProvider){
 
     .when('/repo/:user/:repo', {
       templateUrl: 'pages/repo-details.html',
-      controller: "repoIssuesCtrl"
+      controller: "issueCtrl"
     });
 
 });
 
-/**
- * This service encapsulates the business logic.
- *
- * It exposes a high-level interface to the GitHub repository query and issue
- * query API backends:
- *  - searchForRepo
- *  - getRepoIssues
- */
-GitHubApp.service('GitHubService', ['$resource',
-  function($resource){
+GitHubApp.factory('RepoService', ['$resource',
+  function($resource) {
 
     function _arrayFromGithubAPI(data) {
       return JSON.parse(data).items;
     }
 
-    var Repository = $resource(
+    var repoService = {};
+
+    repoService._repos = [];
+    repoService._resource = $resource(
       "https://api.github.com/search/repositories?q=:q", {}, {
         query: {
           method: 'GET',
           isArray: true,
           transformResponse: _arrayFromGithubAPI
         }
-      }
+      }           
     );
 
-    this.searchForRepo = function query(query) {
-      return Repository.query({
+    repoService.search = function query(query) {
+      return repoService._resource.query({
         q: query
       }).$promise;
     };
 
+    repoService.setRepos = function setRepos(repos) {
+      repoService._repos = repos;
+    }
 
-    var Issues = $resource(
+    return repoService;
+  }
+]);
+
+GitHubApp.factory('IssueService', ['$resource',
+  function($resource){
+
+    var issueService = {};
+
+    issueService._resource = $resource(
       "https://api.github.com/repos/:userName/:repoName/issues",{}, {
         query: {
           method: 'GET',
@@ -57,47 +64,38 @@ GitHubApp.service('GitHubService', ['$resource',
       }
     );
 
-    this.getRepoIssues = function get(userName, repoName) {
-      return Issues.query({
-        userName: userName,
-        repoName: repoName
+    issueService.search = function query(user, repo) {
+      return issueService._resource.query({
+        userName: user,
+        repoName: repo
       }).$promise;
-    }
+    };
+
+    return issueService;
   }
 ]);
 
-/**
- * The main controller acts as an intermediary between the view presented to
- * the user and the business logic, encapsulated by `GitHubService`. We could
- * simply set `GitHubService` as a property of `$scope`, but wrapping service
- * functionality offers the controller the opportunity to enforce additonal
- * constraints/ set UI state before and after using the service.
- */
-GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'GitHubService',
-  function($scope, $location, $routeParams, GitHubService){
+GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'RepoService',
+  function($scope, $location, $routeParams, RepoService){
+
+    $scope.repos = RepoService._repos;
 
     $scope.queryRepos = function() {
       $scope.repos = [];
-      GitHubService.searchForRepo($scope.query).then(function(repos){
+      RepoService.search($scope.query).then(function(repos){
+        RepoService.setRepos(repos);
         $scope.repos = repos;
       });
     }
-
   }
 ]);
 
-/**
- * This controller uses `GitHubService.getRepoIssues` to fetch the issues of
- * a repository on the repository details page. Each issue is rendered with
- * `issue-directive`.
- */
-GitHubApp.controller('repoIssuesCtrl', ['$scope', '$routeParams', '$location', 'GitHubService',
-  function($scope, $routeParams, $location, GitHubService){
+GitHubApp.controller('issueCtrl', ['$scope', '$routeParams', '$location', 'IssueService',
+  function($scope, $routeParams, $location, IssueService){
 
     var params = $routeParams;
 
-    GitHubService.getRepoIssues(params.user, params.repo).then(function(issues){
-      console.log('issues: ', issues);
+    IssueService.search(params.user, params.repo).then(function(issues){
       $scope.issues = issues;
     });
 
@@ -118,7 +116,7 @@ GitHubApp.directive("repoDirective", function(){
 GitHubApp.directive("issueDirective", function(){
   return {
     restrict: "AE",
-    template: '<li> {{ issue.title }} </li>',
+    template: '<a href="{{ issue.html_url }}" class="list-group-item">{{ issue.title }}</a>',
     replace: true,
     scope: {
       issue: "="
