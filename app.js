@@ -1,41 +1,29 @@
 var GitHubApp = angular.module('GitHubApp', ['ngRoute', 'ngResource']);
 
-GitHubApp.config(function($routeProvider){
+var GitHubApp
 
-  $routeProvider
+GitHubApp
+  .config(function($routeProvider){
 
-    .when('/', {
-      templateUrl: 'pages/main.html',
-      controller: "mainCtrl"
-    })
+    $routeProvider
 
-    .when('/repo/:user/:repo', {
-      templateUrl: 'pages/repo-details.html',
-      controller: "issueCtrl"
-    });
+      .when('/', {
+        templateUrl: 'pages/main.html',
+        controller: "mainCtrl"
+      })
 
-});
+      .when('/repo/:user/:repo', {
+        templateUrl: 'pages/repo-details.html',
+        controller: "issueCtrl"
+      });
 
-GitHubApp.factory('RepoService', ['$resource',
-  function($resource) {
-
-    var repoService = {};
-
-    repoService.paginationInfo = {};
-    repoService.paginationInfo.currentPage = 1;
-    repoService.paginationInfo.totalPages = 1;
-
-    repoService.rateLimitInfo = {};
-    repoService.rateLimitInfo.limit = null;
-    repoService.rateLimitInfo.remaining = null;
-
-    repoService._repos = [];
-
+  })
+  .run(function($rootScope){
     /**
      * Github provides a special Link header on paginated API responses
      * based on: https://gist.github.com/niallo/3109252#gistcomment-1474669 
      */
-    function _parseLinkHeader(header) {
+    $rootScope._parseLinkHeader = function _parseLinkHeader(header) {
       if (header.length === 0) {
         throw new Error("input must not be of zero length");
       }
@@ -53,12 +41,50 @@ GitHubApp.factory('RepoService', ['$resource',
       return links;
     }
 
-    function _getNrOfPages(links) {
+    /**
+     * @param {Object} links hash, as returned by `_parseLinkHeader`
+     */
+    $rootScope._getNrOfPages = function _getNrOfPages(links) {
       if(links.last) {
         var regex = /&page=(\d+)/;
         return links.last.match(regex)[1];
       }
     }
+
+    /**
+     * Parses GitHub-specific `headers` and adds them to a `headerinfo` property
+     * on the `dst` object
+     *
+     * @param {Object} dst destination object, which will be extended
+     * @param {Object} headers as returned by `$resource`s `transformResponse`
+     */
+    $rootScope.extendWithHeaderInfo = function extendWithHeaderInfo(dst, headers) {
+
+      dst.headerInfo = {};
+
+      dst.headerInfo.pagination = {};
+      if(headers['link']) {
+        var links = $rootScope._parseLinkHeader(headers['link']);
+        dst.headerInfo.pagination.nrOfPages = $rootScope._getNrOfPages(links);
+        dst.headerInfo.pagination.nextPage = links.next;
+      }
+
+      dst.headerInfo.rateLimit = {};
+      if(headers['x-ratelimit-limit']){
+        dst.headerInfo.rateLimit.limit = parseInt(headers['x-ratelimit-limit']);
+      }
+      if(headers['x-ratelimit-remaining']){
+        dst.headerInfo.rateLimit.remaining = parseInt(headers['x-ratelimit-remaining']);
+      }
+    }
+  });
+
+GitHubApp.factory('RepoService', ['$rootScope', '$resource',
+  function($rootScope, $resource) {
+
+    var repoService = {};
+
+    repoService._repos = [];
 
     repoService._resource = $resource(
       "https://api.github.com/search/repositories?q=:q", {}, {
@@ -66,20 +92,13 @@ GitHubApp.factory('RepoService', ['$resource',
           method: 'GET',
           isArray: true,
           transformResponse: function(data, headers){
-            var headers = headers();
-            console.log(headers);
-            if(headers['link']) {
-              var links = _parseLinkHeader(headers['link']);
-              repoService.nrOfPages = _getNrOfPages(links);
-              repoService.nextPage = links.next;
-            }
-            if(headers['x-ratelimit-limit']){
-              repoService.rateLimitInfo.limit = parseInt(headers['x-ratelimit-limit']);
-            }
-            if(headers['x-ratelimit-remaining']){
-              repoService.rateLimitInfo.remaining = parseInt(headers['x-ratelimit-remaining']);
-            }
             return JSON.parse(data).items;
+          },
+          interceptor: {
+            response: function(data) {
+              $rootScope.extendWithHeaderInfo(repoService, data.headers());
+              return data.data;
+            }
           }
         }
       }           
@@ -99,8 +118,8 @@ GitHubApp.factory('RepoService', ['$resource',
   }
 ]);
 
-GitHubApp.factory('IssueService', ['$resource',
-  function($resource){
+GitHubApp.factory('IssueService', ['$rootScope', '$resource',
+  function($rootScope, $resource){
 
     var issueService = {};
 
@@ -108,7 +127,13 @@ GitHubApp.factory('IssueService', ['$resource',
       "https://api.github.com/repos/:userName/:repoName/issues",{}, {
         query: {
           method: 'GET',
-          isArray: true
+          isArray: true,
+          interceptor: {
+            response: function(data) {
+              $rootScope.extendWithHeaderInfo(issueService, data.headers());
+              return data.data;
+            }
+          }
         }
       }
     );
@@ -128,15 +153,13 @@ GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'RepoSe
   function($scope, $location, $routeParams, RepoService){
 
     $scope.repos = RepoService._repos;
-    $scope.paginationInfo = RepoService.paginationInfo;
-    $scope.rateLimitInfo = RepoService.rateLimitInfo;
+    $scope.headerInfo = RepoService.headerInfo;
 
     $scope.queryRepos = function() {
       $scope.repos = [];
       RepoService.search($scope.query).then(function(repos){
         RepoService.setRepos(repos);
-        $scope.paginationInfo = RepoService.paginationInfo;
-        $scope.rateLimitInfo = RepoService.rateLimitInfo;
+        $scope.headerInfo = RepoService.headerInfo;
         $scope.repos = repos;
       });
     }
@@ -150,6 +173,7 @@ GitHubApp.controller('issueCtrl', ['$scope', '$routeParams', '$location', 'Issue
 
     IssueService.search(params.user, params.repo).then(function(issues){
       $scope.issues = issues;
+      $scope.headerInfo = IssueService.headerInfo;
     });
 
   }

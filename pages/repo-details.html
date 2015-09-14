@@ -9,4 +9,8 @@
     <issue-directive issue="issue" ng-repeat="issue in issues"></issue-directive>
   </div>
   </a>
+  <div class="alert alert-warning" ng-if="headerInfo.rateLimit.remaining">
+    GitHub limits API queries; remaining: {{ headerInfo.rateLimit.remaining }}
+    (<a href="https://developer.github.com/v3/search/#rate-limit">more info</a>)
+  </div>
 </div>
