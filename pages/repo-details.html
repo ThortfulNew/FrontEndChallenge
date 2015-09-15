@@ -1,10 +1,11 @@
 <h3>Repo Details</h3>
 <div>
-  <h4 class="list-group-item-heading">{{ repo.full_name }}</h4>
+  <a class="h4 list-group-item-heading" href="{{repo.html_url}}">{{ repo.full_name }}</a>
   <p class="list-group-item-text">{{ repo.description }}</p>
   <p>
     <span class="glyphicon glyphicon-star" aria-hidden="true">{{repo.stargazers_count}}</span>
   </p>
+  <p ng-if="issues.length === 0">No issues to display.</p>
   <div class="list-group">
     <issue-directive issue="issue" ng-repeat="issue in issues"></issue-directive>
   </div>

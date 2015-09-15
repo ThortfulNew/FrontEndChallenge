@@ -128,7 +128,6 @@ GitHubApp.factory('RepoService', ['$rootScope', '$resource',
     };
 
     repoService.getNextPage = function getNextPage() {
-      console.log(repoService.headerInfo);
       var nextPageResource = $resource(repoService.headerInfo.pagination.nextPage, {}, {
         query: {
           isArray: true,
@@ -279,7 +278,7 @@ GitHubApp.directive("repoDirective", function(){
 GitHubApp.directive("issueDirective", function(){
   return {
     restrict: "AE",
-    template: '<a href="{{ issue.html_url }}" class="list-group-item">{{ issue.title }}</a>',
+    template: '<a href="{{ issue.html_url }}" class="list-group-item">{{ issue.title }}  <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>',
     replace: true,
     scope: {
       issue: "="
