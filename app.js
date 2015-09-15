@@ -113,9 +113,19 @@ GitHubApp.factory('RepoService', ['$rootScope', '$resource',
       }).$promise;
     };
 
-    repoService.setRepos = function setRepos(repos) {
-      repoService._repos = repos;
-    }
+    repoService.get = function get(user, repo) {
+      var repoResource = $resource("https://api.github.com/repos/" + user + "/" + repo, {}, {
+        get: {
+          interceptor: {
+            response: function(data) {
+              $rootScope.extendWithHeaderInfo(repoService, data.headers());
+              return data.data;
+            }
+          }
+        }
+      });
+      return repoResource.get().$promise;
+    };
 
     repoService.getNextPage = function getNextPage() {
       console.log(repoService.headerInfo);
@@ -197,10 +207,27 @@ GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'RepoSe
   }
 ]);
 
-GitHubApp.controller('issueCtrl', ['$scope', '$routeParams', '$location', 'IssueService',
-  function($scope, $routeParams, $location, IssueService){
+GitHubApp.controller('issueCtrl', ['$scope', '$routeParams', '$location', 'RepoService', 'IssueService',
+  function($scope, $routeParams, $location, RepoService, IssueService){
 
     var params = $routeParams;
+
+    // find selected repo in RepoService's cache, to avoid having to fetch it again
+    for(var i=0; i < RepoService._repos.length; ++i) {
+      var _repo = RepoService._repos[i];
+      if(_repo.full_name === params.user + '/' + params.repo) {
+        $scope.repo = _repo;
+      }
+    }
+
+    // when url is accessed directly, we will have to fetch repo info
+    if(!$scope.repo) {
+      RepoService.get(params.user, params.repo).then(function(_repo){
+        if(_repo) {
+          $scope.repo = _repo;
+        }
+      });
+    }
 
     IssueService.search(params.user, params.repo).then(function(issues){
       $scope.issues = issues;
