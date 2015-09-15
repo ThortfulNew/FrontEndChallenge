@@ -13,4 +13,11 @@
     GitHub limits API queries; remaining: {{ headerInfo.rateLimit.remaining }}
     (<a href="https://developer.github.com/v3/search/#rate-limit">more info</a>)
   </div>
+
+  <button type="button" class="btn btn-default btn-lg"
+    ng-if="headerInfo.pagination.nextPage"
+    ng-click="queryNextPage()">
+    Load More
+  </button>
+
 </div>

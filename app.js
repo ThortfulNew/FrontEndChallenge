@@ -138,6 +138,7 @@ GitHubApp.factory('RepoService', ['$rootScope', '$resource',
           interceptor: {
             response: function(data) {
               $rootScope.extendWithHeaderInfo(repoService, data.headers());
+              repoService._repos = repoService._repos.concat(data.data);
               return data.data;
             }
           }
@@ -155,6 +156,8 @@ GitHubApp.factory('IssueService', ['$rootScope', '$resource',
 
     var issueService = {};
 
+    issueService._issues = [];
+
     issueService._resource = $resource(
       "https://api.github.com/repos/:userName/:repoName/issues",{}, {
         query: {
@@ -162,6 +165,7 @@ GitHubApp.factory('IssueService', ['$rootScope', '$resource',
           interceptor: {
             response: function(data) {
               $rootScope.extendWithHeaderInfo(issueService, data.headers());
+              issueService._issues = issueService._issues.concat(data.data);
               return data.data;
             }
           }
@@ -175,6 +179,22 @@ GitHubApp.factory('IssueService', ['$rootScope', '$resource',
         repoName: repo
       }).$promise;
     };
+
+    issueService.getNextPage = function getNextPage() {
+      var nextPageResource = $resource(issueService.headerInfo.pagination.nextPage, {}, {
+        query: {
+          isArray: true,
+          interceptor: {
+            response: function(data) {
+              $rootScope.extendWithHeaderInfo(issueService, data.headers());
+              issueService._issues = issueService._issues.concat(data.data);
+              return data.data;
+            }
+          }
+        }
+      });
+      return nextPageResource.query().$promise;
+    }           
 
     return issueService;
   }
@@ -198,7 +218,6 @@ GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'RepoSe
     $scope.queryNextPage = function() {
       if(RepoService.headerInfo.pagination.nextPage) {
         RepoService.getNextPage().then(function(repos){
-          RepoService._repos = RepoService._repos.concat(repos);
           $scope.headerInfo = RepoService.headerInfo;
           $scope.repos = RepoService._repos;
         });
@@ -227,6 +246,15 @@ GitHubApp.controller('issueCtrl', ['$scope', '$routeParams', '$location', 'RepoS
           $scope.repo = _repo;
         }
       });
+    }
+
+    $scope.queryNextPage = function() {
+      if(IssueService.headerInfo.pagination.nextPage) {
+        IssueService.getNextPage().then(function(issues){
+          $scope.headerInfo = IssueService.headerInfo;
+          $scope.issues = IssueService._issues;
+        });
+      }
     }
 
     IssueService.search(params.user, params.repo).then(function(issues){

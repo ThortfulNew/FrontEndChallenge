@@ -1,0 +1,13 @@
+html, body {
+  height: 100%;
+}
+
+html {
+  background-image: url("../img/seamless_paper_texture.png");
+}
+
+body {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background: transparent;
+}
