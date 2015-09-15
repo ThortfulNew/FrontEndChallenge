@@ -9,7 +9,13 @@ module.exports = function(config) {
       './node_modules/angular-resource/angular-resource.js',
       './node_modules/angular-mocks/angular-mocks.js',
       './node_modules/d3/d3.js',
-      '*.js'
+      './github/module.js',
+      './github/main.controller.js',
+      './github/repo.factory.js',
+      './github/issue.factory.js',
+      './github/issue.controller.js',
+      './github/directives.js',
+      './app.test.js'
     ],
     client: {
       mocha: {
