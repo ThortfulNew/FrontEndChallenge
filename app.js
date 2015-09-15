@@ -19,9 +19,12 @@ GitHubApp
 
   })
   .run(function($rootScope){
+
     /**
      * Github provides a special Link header on paginated API responses
      * based on: https://gist.github.com/niallo/3109252#gistcomment-1474669 
+     *
+     * @param {String} header GitHub Link header
      */
     $rootScope._parseLinkHeader = function _parseLinkHeader(header) {
       if (header.length === 0) {
@@ -47,7 +50,8 @@ GitHubApp
     $rootScope._getNrOfPages = function _getNrOfPages(links) {
       if(links.last) {
         var regex = /&page=(\d+)/;
-        return links.last.match(regex)[1];
+        var match = links.last.match(regex);
+        return match ? match[1] : 1;
       }
     }
 
@@ -66,7 +70,7 @@ GitHubApp
       if(headers['link']) {
         var links = $rootScope._parseLinkHeader(headers['link']);
         dst.headerInfo.pagination.nrOfPages = $rootScope._getNrOfPages(links);
-        dst.headerInfo.pagination.nextPage = links.next;
+        dst.headerInfo.pagination.nextPage = links.next || null;
       }
 
       dst.headerInfo.rateLimit = {};
@@ -89,7 +93,6 @@ GitHubApp.factory('RepoService', ['$rootScope', '$resource',
     repoService._resource = $resource(
       "https://api.github.com/search/repositories?q=:q", {}, {
         query: {
-          method: 'GET',
           isArray: true,
           transformResponse: function(data, headers){
             return JSON.parse(data).items;
@@ -114,6 +117,25 @@ GitHubApp.factory('RepoService', ['$rootScope', '$resource',
       repoService._repos = repos;
     }
 
+    repoService.getNextPage = function getNextPage() {
+      console.log(repoService.headerInfo);
+      var nextPageResource = $resource(repoService.headerInfo.pagination.nextPage, {}, {
+        query: {
+          isArray: true,
+          transformResponse: function(data, headers){
+            return JSON.parse(data).items;
+          },
+          interceptor: {
+            response: function(data) {
+              $rootScope.extendWithHeaderInfo(repoService, data.headers());
+              return data.data;
+            }
+          }
+        }
+      });
+      return nextPageResource.query().$promise;
+    }           
+
     return repoService;
   }
 ]);
@@ -126,7 +148,6 @@ GitHubApp.factory('IssueService', ['$rootScope', '$resource',
     issueService._resource = $resource(
       "https://api.github.com/repos/:userName/:repoName/issues",{}, {
         query: {
-          method: 'GET',
           isArray: true,
           interceptor: {
             response: function(data) {
@@ -138,7 +159,7 @@ GitHubApp.factory('IssueService', ['$rootScope', '$resource',
       }
     );
 
-    issueService.search = function query(user, repo) {
+    issueService.search = function query(user, repo, url) {
       return issueService._resource.query({
         userName: user,
         repoName: repo
@@ -158,10 +179,20 @@ GitHubApp.controller('mainCtrl', ['$scope', '$location', '$routeParams', 'RepoSe
     $scope.queryRepos = function() {
       $scope.repos = [];
       RepoService.search($scope.query).then(function(repos){
-        RepoService.setRepos(repos);
+        RepoService._repos = repos;
         $scope.headerInfo = RepoService.headerInfo;
         $scope.repos = repos;
       });
+    }
+
+    $scope.queryNextPage = function() {
+      if(RepoService.headerInfo.pagination.nextPage) {
+        RepoService.getNextPage().then(function(repos){
+          RepoService._repos = RepoService._repos.concat(repos);
+          $scope.headerInfo = RepoService.headerInfo;
+          $scope.repos = RepoService._repos;
+        });
+      }
     }
   }
 ]);
