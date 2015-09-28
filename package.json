@@ -1,0 +1,26 @@
+{
+  "name": "thortful_frontend_challenge",
+  "version": "1.0.0",
+  "description": "angularjs test for thortful",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThortfulNew/FrontEndChallenge.git"
+  },
+  "keywords": [
+    "test",
+    "thortful",
+    "angularjs",
+    "npm",
+    "bower"
+  ],
+  "author": "Albert Abril",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThortfulNew/FrontEndChallenge/issues"
+  },
+  "homepage": "https://github.com/ThortfulNew/FrontEndChallenge#readme"
+}
