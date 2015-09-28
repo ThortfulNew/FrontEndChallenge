@@ -7,7 +7,7 @@ var build = {};
 build.copy = function(){
   var paths = [
     '!src/stylus/',  // except src/stylus
-    '.src/**'      // copy all files
+    'src/**'      // copy all files
   ];
   return gulp.src(paths).pipe(gulp.dest('./dist/'));
 };
