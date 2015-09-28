@@ -24,6 +24,10 @@
   },
   "homepage": "https://github.com/ThortfulNew/FrontEndChallenge#readme",
   "dependencies": {
-    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.9.6",
+    "gulp": "^3.9.0",
+    "require-dir": "^0.3.0"
   }
 }
