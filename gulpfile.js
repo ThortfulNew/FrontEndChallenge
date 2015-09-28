@@ -9,4 +9,4 @@ gulp.task('build', tasks.build);
 gulp.task('loop', tasks.loop);
 gulp.task('browser', tasks.browser);
 
-gulp.task('default', ['browser']);
+gulp.task('default', ['build', 'loop', 'browser']);
