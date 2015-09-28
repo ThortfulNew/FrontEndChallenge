@@ -3,12 +3,12 @@ var browserSync = require('browser-sync');
 
 module.exports = function(){
     var watchFiles = [
-       'public/**'
+       'dist/**'
     ];
 
     var browserConfig = {
         server: {
-            baseDir: './public'
+            baseDir: './dist'
         }
     };
 
