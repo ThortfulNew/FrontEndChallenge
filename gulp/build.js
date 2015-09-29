@@ -17,5 +17,13 @@ build.stylus = function(){
    return gulp.src(paths).pipe(stylus()).pipe(gulp.dest('./dist/css'));
 };
 
+build.images = function(){
+   var paths = [ 'src/stylus/main.styl'];
+   return gulp.src(paths).pipe(stylus()).pipe(gulp.dest('./dist/css'));
+};
+
+
+
+
 module.exports.copy = build.copy;
 module.exports.stylus = build.stylus;
