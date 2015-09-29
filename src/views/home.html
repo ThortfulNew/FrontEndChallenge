@@ -1,16 +1,30 @@
 <div id="search_box">
 
     <!-- Header -->
-    <div class="row search_box_header">
-      <div class="col s4">4 Logo</div>
-      <div class="col s4">4 empty</div>
-      <div class="col s4">4 Repo Finder</div>
+    <div class="row search_box_header" style="margin-top: 30px;">
+      <div class="col s4">
+        <img class="responsive-img" ng-src="img/logo.png" />
+      </div>
+      <div class="col s4 offset-s4">
+        <img class="responsive-img" ng-src="img/logo_repofinder.png" />
+      </div>
     </div>
 
     <!-- Input Search -->
     <div class="row">
-      <div class="col s12">12</div>
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="text" class="validate">
+            <label for="text">Search GitHub Repositories</label>
+          </div>
+        </div>
+      </form>
     </div>
+
+
+
+
 
     <!-- Results -->
 
