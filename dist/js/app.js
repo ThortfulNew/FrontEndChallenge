@@ -14,13 +14,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 app.controller('HomeController', function ($scope, $http) {
 
+    $scope.searchGithub = function(){
 
-  $http
-    .get('https://api.github.com/search/repositories?q=boostrap')
-    .success(function(data) {
-        $scope.greeting = data;
-        console.log(data.items);
-    });
-
-
+      $http
+        .get('https://api.github.com/search/repositories?q='+$scope.query)
+        .success(function(data) {
+            $scope.items = data.items;
+            console.log($scope.items);
+        });
+    };
+    
 });
