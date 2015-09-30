@@ -12,5 +12,15 @@ app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise("/");
 });
 
-app.controller('HomeController', function ($scope) {
+app.controller('HomeController', function ($scope, $http) {
+
+
+  $http
+    .get('https://api.github.com/search/repositories?q=boostrap')
+    .success(function(data) {
+        $scope.greeting = data;
+        console.log(data.items);
+    });
+
+
 });
