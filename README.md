@@ -22,8 +22,7 @@ We could be sneaky and not say anything else, but here's some things we're looki
 
 * An app we can try :)
 * Use of existing open source libraries
-* Tests!
-* **In this test** we don't care too much about the UI, what we care is how good the code is!
+* Something not looking like a web site from 1993s, We do like how the internet looks today :)
 
 ### Submission notes
 
