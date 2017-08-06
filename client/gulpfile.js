@@ -3,6 +3,7 @@ const concat = require('gulp-concat')
 const rename = require('gulp-rename')
 const uglify = require('gulp-uglify')
 const clean = require('gulp-clean')
+const runSequence = require('run-sequence')
 const templateCache = require('gulp-angular-templatecache')
 
 const sourceDir = "./src"
@@ -10,13 +11,19 @@ const distDir = '../server/public/'
 const cachedTemplatesName = "templates"
 const finalName = "frontEndChallenge"
 
+const indexPage = "index.html"
+
+const cachedTemplates = distDir + '/templates.js'
+
+const bootstrapCSS = "./bower_components/bootstrap/dist/css/bootstrap.css"
+
 const angularJS = "./bower_components/angular/angular.js"
 const modules = sourceDir + '/**/*.module.js'
 const components = sourceDir + '/**/*.component.js'
 const services = sourceDir + '/**/*.service.js'
 const templates = sourceDir + '/**/*.component.html'
-const cachedTemplates = distDir + '/templates.js'
-const indexPage = "index.html"
+
+
 
 gulp.task('build-js', ["build-templates"], function () {
 
@@ -36,7 +43,7 @@ gulp.task('build-js', ["build-templates"], function () {
     //.pipe(gulp.dest(distDir));
 });
 
-gulp.task('build-templates', ["clean"], function () {
+gulp.task('build-templates', function () {
     return gulp.src(templates)
         .pipe(templateCache(cachedTemplatesName + ".js", {
             'module': 'fec_templates',
@@ -45,8 +52,13 @@ gulp.task('build-templates', ["clean"], function () {
         .pipe(gulp.dest(distDir));
 });
 
-gulp.task('build', ["build-js"], function () {
+gulp.task('build-index', function () {
     return gulp.src(indexPage)
+        .pipe(gulp.dest(distDir));
+});
+
+gulp.task('build-css', ["build-js"], function () {
+    return gulp.src(bootstrapCSS)
         .pipe(gulp.dest(distDir));
 });
 
@@ -55,4 +67,6 @@ gulp.task('clean', function () {
         .pipe(clean({ force: true }));
 });
 
-gulp.task('default', ['clean', 'build']);
+gulp.task('default', function (cb) {
+    runSequence('clean', ['build-index', 'build-css', 'build-js'], cb)
+});

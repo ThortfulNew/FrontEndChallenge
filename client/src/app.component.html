@@ -1,5 +1,11 @@
-<h1>Hello!</h1>
-
-<search on-repos="$ctrl.onRepos(repos)"></search>
-
-<repo-list ng-if="$ctrl.repos" repos="$ctrl.repos"></repo-list>
+<div class="container">
+    <h1>Hello!</h1>
+    <div class="row">
+        <search on-repos="$ctrl.onRepos(repos)"></search>
+        <div class="col-sm-6">
+            <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos"></repo-list>
+        </div>
+        <div class="col-sm-6">
+        </div>
+    </div>
+</div>
