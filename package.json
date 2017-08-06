@@ -1,0 +1,25 @@
+{
+  "name": "front-end-challenge",
+  "version": "1.0.0",
+  "description": "Show us what you can do and how clean your code is! Write a JavaScript / Coffeescript app using AngularJS that will allow a user to search a repository by name and display a repository's relevant information such as URL, description, forks count, stargazers count, open issues count etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juancarloshg/FrontEndChallenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juancarloshg/FrontEndChallenge/issues"
+  },
+  "homepage": "https://github.com/juancarloshg/FrontEndChallenge#readme",
+  "devDependencies": {
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
+  }
+}
