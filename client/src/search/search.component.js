@@ -1,11 +1,11 @@
 (function (window) {
     'use strict';
 
-    angular.module('frontEndChallenge').component('search', {
-        templateUrl: 'search.component.html',
+    angular.module('frontEndChallenge.search').component('search', {
+        templateUrl: 'search/search.component.html',
         controller: ["searchService", SearchController],
         bindings: {
-            onSearch: '&'
+            onRepos: '&'
         }
     });
 
@@ -13,10 +13,10 @@
         var vm = this;
 
         vm.search = function () {
-            searchService.getRepositoriesByName(vm.currentSearch)
-                .then(function (res) {
-                    console.log("Found them!", res)
-                    vm.onRepositories(res);
+            searchService.getReposByName(vm.currentSearch)
+                .then(function (data) {
+                    console.log("Found them!", data)
+                    vm.onRepos({repos: data});
                 })
                 .catch(function (err) {
                     console.error(err)
