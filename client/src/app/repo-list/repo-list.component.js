@@ -6,7 +6,8 @@
         controller: ["$scope", RepoListController],
         bindings: {
             repos: '<',
-            onRepoClick: '&'
+            onRepoClick: '&',
+            isSelectedIssue: '<'
         }
     });
 
@@ -18,12 +19,14 @@
         }, function (newVal) {
             if (newVal && newVal.length) {
                 initPagination(vm.repos);
+            } else {
+                vm.currentRepos = null;
             }
         })
 
-        vm.displayIssues = function (username, repo) {
+        vm.displayIssues = function (username, repo, index) {
             console.log("sent repo click", username, repo)
-            vm.onRepoClick({ username: username, repo: repo })
+            vm.onRepoClick({ username: username, repo: repo, index: index })
         }
 
         vm.setPage = function (pageNum) {
@@ -38,7 +41,7 @@
 
         function initPagination(repos) {
             vm.currentPage = 0;
-            vm.pages = getPages(repos, 5)
+            vm.pages = getPages(repos, 4)
             vm.currentRepos = vm.pages[0];
         }
 

@@ -26,8 +26,10 @@ const components = appDir + '/**/*.component.js'
 const services = appDir + '/**/*.service.js'
 const templates = appDir + '/**/*.component.html'
 const filters = appDir + '/**/*.filter.js'
+const directives = appDir + '/**/*.directive.js'
 
 const fontAwesomeFonts = "./bower_components/font-awesome/fonts/**.*"
+const bootstrapFonts = "./bower_components/bootstrap/fonts/**.*"
 
 
 gulp.task('build-js', ["build-templates"], function () {
@@ -38,6 +40,7 @@ gulp.task('build-js', ["build-templates"], function () {
         modules,
         services,
         filters,
+        directives,
         components
     ]
 
@@ -69,7 +72,7 @@ gulp.task('build-css', ["build-js"], function () {
 });
 
 gulp.task('build-fonts', function () {
-    return gulp.src([fontAwesomeFonts])
+    return gulp.src([fontAwesomeFonts, bootstrapFonts])
         .pipe(gulp.dest(distDir + "/fonts"));
 });
 

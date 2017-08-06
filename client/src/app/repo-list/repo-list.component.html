@@ -1,19 +1,24 @@
 <h2>Repositories list</h2>
 
-<div ng-repeat="repo in $ctrl.currentRepos" class="row">
-    <div class="col-sm-8">
-        <h3 style="cursor: pointer;text-decoration: underline" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name)">{{repo.full_name}}</h3>
-        <p><span class="field-name">Description: </span>{{repo.description}}</p>
-        <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>
+<div ng-show="$ctrl.currentRepos.length">
+    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="row" ng-class="{'active-issue': $ctrl.isSelectedIssue($index)}">
+        <div class="col-sm-12">
+            <h3 style="cursor: pointer;text-decoration: underline" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">{{repo.full_name}}</h3>
+            <p ng-show="repo.description"><span class="field-name">Description: </span>{{repo.description}}</p>
+            <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}}</p>
+            <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>
+            <p ng-show="repo.language"><span class="field-name">Language: </span>{{repo.language}}</p>
+            <p><span class="field-name">Stars: </span>{{repo.stargazers_count}}</p>
+            <p><span class="field-name">Forks: </span>{{repo.forks}}</p>
+        </div>
+
     </div>
-    <div class="col-sm-2">
-        <span>{{repo.language}}</span>
-    </div>
-    <div class="col-sm-2">
-        <span>{{repo.stargazers_count}}</span>
-    </div>
+
+    <ul ng-if="$ctrl.pages.length > 1" class="pagination">
+        <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>
+    </ul>
 </div>
 
-<ul ng-if="$ctrl.pages.length > 1" class="pagination">
-    <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>
-</ul>
+<div ng-hide="$ctrl.currentRepos.length">
+    No repositories found
+</div>

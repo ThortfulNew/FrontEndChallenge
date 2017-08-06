@@ -16,7 +16,8 @@
             console.log("Got them!", repos)
         }
 
-        vm.displayIssues = function (username, repo) {
+        vm.displayIssues = function (username, repo, index) {
+            vm.selectedIssue = index;
             console.log("App displaying issues", username, repo)
             vm.issueParameters = {
                 username: username,
@@ -24,8 +25,13 @@
             }
         }
 
-        vm.hideIssues = function () {
+        vm.isSelectedIssue = function (issueIndex) {
+            return vm.selectedIssue == issueIndex
+        }
 
+        vm.closeIssues = function () {
+            vm.selectedIssue = null;
+            vm.issueParameters = null;
         }
     }
 

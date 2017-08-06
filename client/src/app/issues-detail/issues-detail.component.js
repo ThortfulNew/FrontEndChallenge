@@ -41,6 +41,10 @@
             return pageNum == vm.currentPage;
         }
 
+        vm.isClosed = function (issue) {
+            return issue.state == "closed"
+        }
+
         function initPagination(issues) {
             vm.currentPage = 0;
             vm.pages = getPages(issues, 4)
