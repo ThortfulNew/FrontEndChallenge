@@ -1,10 +1,10 @@
 <h2>Repositories list</h2>
 
 <div ng-repeat="repo in $ctrl.repos" class="row">
-    <h3 style="cursor: pointer;text-decoration: underline" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name)">{{repo.full_name}}</h3>
     <div class="col-sm-8">
-        <p>{{repo.description}}</p>
-        <p>{{repo.updated_at | date}}</p>
+        <h3 style="cursor: pointer;text-decoration: underline" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name)">{{repo.full_name}}</h3>
+        <p><span class="field-name">Description: </span>{{repo.description}}</p>
+        <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>
     </div>
     <div class="col-sm-2">
         <span>{{repo.language}}</span>

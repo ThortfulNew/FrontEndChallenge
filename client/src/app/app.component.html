@@ -1,7 +1,8 @@
 <div class="container">
-    <h1>Hello!</h1>
+    <h1 class="text-center">Github repositories search</h1>
+    <search on-repos="$ctrl.onRepos(repos)"></search>
     <div class="row">
-        <search on-repos="$ctrl.onRepos(repos)"></search>
+
         <div class="col-sm-6">
             <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo)"></repo-list>
         </div>

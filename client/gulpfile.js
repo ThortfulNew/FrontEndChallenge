@@ -17,6 +17,7 @@ const cachedTemplates = distDir + '/templates.js'
 
 const bootstrapCSS = "./bower_components/bootstrap/dist/css/bootstrap.css"
 const bootstrapCSSMap = "./bower_components/bootstrap/dist/css/bootstrap.css.map"
+const fontAwesomeCSS = "./bower_components/font-awesome/css/font-awesome.css"
 const customCSS = "./src/style.css"
 
 const angularJS = "./bower_components/angular/angular.js"
@@ -26,6 +27,7 @@ const services = appDir + '/**/*.service.js'
 const templates = appDir + '/**/*.component.html'
 const filters = appDir + '/**/*.filter.js'
 
+const fontAwesomeFonts = "./bower_components/font-awesome/fonts/**.*"
 
 
 gulp.task('build-js', ["build-templates"], function () {
@@ -62,8 +64,13 @@ gulp.task('build-index', function () {
 });
 
 gulp.task('build-css', ["build-js"], function () {
-    return gulp.src([bootstrapCSS, bootstrapCSSMap, customCSS])
+    return gulp.src([bootstrapCSS, bootstrapCSSMap, customCSS, fontAwesomeCSS])
         .pipe(gulp.dest(distDir));
+});
+
+gulp.task('build-fonts', function () {
+    return gulp.src([fontAwesomeFonts])
+        .pipe(gulp.dest(distDir + "/fonts"));
 });
 
 gulp.task('clean', function () {
@@ -72,8 +79,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (cb) {
-    runSequence('clean', ['build-index', 'build-css', 'build-js'], cb)
-
+    runSequence('clean', ['build-index', 'build-css', 'build-js', 'build-fonts'], cb)
 })
 
 gulp.task('default', ['build']);
