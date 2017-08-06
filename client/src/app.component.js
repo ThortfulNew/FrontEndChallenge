@@ -7,6 +7,11 @@
         bindings: {}
     });
 
-    function AppController() { }
+    function AppController() {
+        var vm = this;
+        vm.onRepositories = function (res) {
+            console.log("Got them!", res)
+        }
+    }
 
 })(window);
