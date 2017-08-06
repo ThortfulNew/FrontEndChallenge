@@ -13,12 +13,10 @@
         vm.onRepos = function (repos) {
             vm.issueParameters = null;
             vm.repos = repos;
-            console.log("Got them!", repos)
         }
 
         vm.displayIssues = function (username, repo, index) {
             vm.selectedIssue = index;
-            console.log("App displaying issues", username, repo)
             vm.issueParameters = {
                 username: username,
                 repo: repo

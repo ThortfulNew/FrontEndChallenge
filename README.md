@@ -1,3 +1,41 @@
+## Live in https://front-end-challenge.herokuapp.com/
+
+## To run locally
+
+### Client folder
+
+Run this commands:
+
+* npm install
+* bower install
+* gulp
+
+### Server folder
+
+* npm install
+* node app
+* go to http://localhost:3000
+
+## Usage
+
+* Open http://localhost:3000
+* Write a repository name in the input field
+* Press enter or click the button
+* Now you will see a list with the found repositories
+    1) click on the repository name to open the issues detail
+    2) click on the owner name to open their github page
+    3) go to another page to keep looking
+* The issues view is quite similar
+
+## Other comments
+
+I hope you appreciate the JavaScript part more than the UI :)
+
+I feel this is still in early development and could do with more functionality and details, but hopefully it shows enough of my coding style. 
+
+Also, some parts may not follow any standard, I have been "testing new paths".
+
+
 # Thortful Front End Fever
 
 Show us what you can do and how clean your code is! Write a JavaScript / Coffeescript app using AngularJS that will allow a user to search a repository by name and display a repository's relevant information such as URL, description, forks count, stargazers count, open issues count etc.

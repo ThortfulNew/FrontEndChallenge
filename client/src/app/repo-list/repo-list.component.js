@@ -25,14 +25,12 @@
         })
 
         vm.displayIssues = function (username, repo, index) {
-            console.log("sent repo click", username, repo)
             vm.onRepoClick({ username: username, repo: repo, index: index })
         }
 
         vm.setPage = function (pageNum) {
             vm.currentRepos = vm.pages[pageNum];
             vm.currentPage = pageNum;
-            console.log(vm.currentPage, vm.currentRepos, vm.pages)
         }
 
         vm.isPageActive = function (pageNum) {

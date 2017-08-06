@@ -26,7 +26,6 @@
 
             issuesService.getIssues(username, repo)
                 .then(function (data) {
-                    console.log("Issues are:", data)
                     initPagination(data.items);
                 })
         }
@@ -34,7 +33,6 @@
         vm.setPage = function (pageNum) {
             vm.currentIssues = vm.pages[pageNum];
             vm.currentPage = pageNum;
-            console.log(vm.currentPage, vm.currentIssues, vm.pages)
         }
 
         vm.isPageActive = function (pageNum) {

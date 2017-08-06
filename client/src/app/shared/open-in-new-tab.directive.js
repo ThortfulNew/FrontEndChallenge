@@ -8,7 +8,6 @@
                 var url = attrs.openInNewTab
 
                 element.bind('click', function () {
-                    console.log("clicked")
                     $window.open(url, '_blank');
                 })
 
