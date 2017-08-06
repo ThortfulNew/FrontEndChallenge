@@ -1,0 +1,21 @@
+<h3>Issues in github.com/{{$ctrl.username + "/" + $ctrl.repo}}:</h3>
+
+<div ng-repeat="issue in $ctrl.issues" class="row">
+    <a href="{{issue.html_url}}" target="_blank">
+        <h4>{{issue.title}}</h4>
+    </a>
+    <div class="col-sm-8">
+        <p>{{issue.body | maxlength:250}}</p>
+        <p>{{issue.state}}</p>
+        <p>{{issue.created_at | date}}</p>
+        <p>{{issue.updated_at | date}}</p>
+        <p>{{issue.closed_at | date}}</p>
+        <p>
+    </div>
+    <!--    <div class="col-sm-2">
+        <span>{{issue.language}}</span>
+    </div>
+    <div class="col-sm-2">
+        <span>{{issue.stargazers_count}}</span>
+    </div>-->
+</div>

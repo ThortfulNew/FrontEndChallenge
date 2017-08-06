@@ -9,9 +9,22 @@
 
     function AppController() {
         var vm = this;
+
         vm.onRepos = function (repos) {
             vm.repos = repos;
             console.log("Got them!", repos)
+        }
+
+        vm.displayIssues = function (username, repo) {
+            console.log("App displaying issues", username, repo)
+            vm.issueParameters = {
+                username: username,
+                repo: repo
+            }
+        }
+
+        vm.hideIssues = function () {
+
         }
     }
 

@@ -3,9 +3,10 @@
     <div class="row">
         <search on-repos="$ctrl.onRepos(repos)"></search>
         <div class="col-sm-6">
-            <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos"></repo-list>
+            <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo)"></repo-list>
         </div>
         <div class="col-sm-6">
+            <issues-detail ng-if="$ctrl.issueParameters" parameters="$ctrl.issueParameters">
         </div>
     </div>
 </div>
