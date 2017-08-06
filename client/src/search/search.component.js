@@ -16,7 +16,7 @@
             searchService.getReposByName(vm.currentSearch)
                 .then(function (data) {
                     console.log("Found them!", data)
-                    vm.onRepos({repos: data});
+                    vm.onRepos({ repos: data.items });
                 })
                 .catch(function (err) {
                     console.error(err)

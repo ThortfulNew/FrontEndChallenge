@@ -1,0 +1,15 @@
+<h2>Repositories list</h2>
+
+<div ng-repeat="repo in $ctrl.repos" class="row">
+    <div class="col-sm-8">
+        <h3>{{repo.full_name}}</h3>
+        <p>{{repo.description}}</p>
+        <p>{{repo.updated_at | date}}</p>
+    </div>
+    <div class="col-sm-2">
+        <h3>{{repo.language}}</h3>
+    </div>
+    <div class="col-sm-2">
+        <h3>{{repo.stargazers_count}}</h3>
+    </div>
+</div>

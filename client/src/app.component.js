@@ -10,6 +10,7 @@
     function AppController() {
         var vm = this;
         vm.onRepos = function (repos) {
+            vm.repos = repos;
             console.log("Got them!", repos)
         }
     }
