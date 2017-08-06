@@ -27,8 +27,34 @@
             issuesService.getIssues(username, repo)
                 .then(function (data) {
                     console.log("Issues are:", data)
-                    vm.issues = data.items;
+                    initPagination(data.items);
                 })
+        }
+
+        vm.setPage = function (pageNum) {
+            vm.currentIssues = vm.pages[pageNum];
+            vm.currentPage = pageNum;
+            console.log(vm.currentPage, vm.currentIssues, vm.pages)
+        }
+
+        vm.isPageActive = function (pageNum) {
+            return pageNum == vm.currentPage;
+        }
+
+        function initPagination(issues) {
+            vm.currentPage = 0;
+            vm.pages = getPages(issues, 4)
+            vm.currentIssues = vm.pages[0];
+        }
+
+        function getPages(issues, pageSize) {
+            var pages = [];
+
+            while (issues.length > 0) {
+                pages.push(issues.splice(0, pageSize));
+            }
+
+            return pages;
         }
     }
 

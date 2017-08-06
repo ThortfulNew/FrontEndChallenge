@@ -1,7 +1,7 @@
 <h3>Issues in github.com/{{$ctrl.username + "/" + $ctrl.repo}}:</h3>
 
-<div ng-repeat="issue in $ctrl.issues" class="row">
-    <div class="col-sm-8">
+<div ng-repeat="issue in $ctrl.currentIssues" class="row">
+    <div class="col-sm-12">
         <a href="{{issue.html_url}}" target="_blank">
             <h4>{{issue.title}}</h4>
         </a>
@@ -12,10 +12,8 @@
         <p><span class="field-name">Closed at: </span>{{issue.closed_at | date}}</p>
         <p>
     </div>
-    <!--    <div class="col-sm-2">
-        <span>{{issue.language}}</span>
-    </div>
-    <div class="col-sm-2">
-        <span>{{issue.stargazers_count}}</span>
-    </div>-->
 </div>
+
+<ul ng-if="$ctrl.pages.length > 1" class="pagination">
+    <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>
+</ul>
