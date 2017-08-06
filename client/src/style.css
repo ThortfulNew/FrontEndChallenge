@@ -31,7 +31,6 @@ a {
     outline: 0 none;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background: #edae19;
-    left: 1px;
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
+    background: #edae00;
 }

@@ -18,7 +18,7 @@
             if (newVal && newVal.username && newVal.repo) {
                 getIssues(newVal.username, newVal.repo)
             }
-        }, true)
+        })
 
         function getIssues(username, repo) {
             vm.username = username;
