@@ -85,3 +85,11 @@ body {
     cursor: pointer;
     text-decoration: underline;
 }
+
+.issues-box {
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    border: 1px solid black;
+    padding: 25px;
+    margin: 20px;
+    border-radius: 5px;
+}

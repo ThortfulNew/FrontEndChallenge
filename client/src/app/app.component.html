@@ -10,7 +10,7 @@
             <div>
                 <repo-list ng-show="$ctrl.repos && !$ctrl.issueParameters && !$ctrl.isLoading" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)"
                     class="opaque animate-show-hide"></repo-list>
-                <div ng-show="$ctrl.issueParameters && !$ctrl.isLoading" class="opaque animate-show-hide" style="border: 1px solid black;padding: 25px;margin: 20px;border-radius: 5px">
+                <div ng-show="$ctrl.issueParameters && !$ctrl.isLoading" class="opaque animate-show-hide issues-box">
                     <i class="fa fa-window-close close-button" aria-hidden="true" ng-click="$ctrl.closeIssues()"></i>
                     <issues-detail on-loading="$ctrl.setLoading(isLoading)" parameters="$ctrl.issueParameters">
                 </div>
