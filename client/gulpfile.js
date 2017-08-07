@@ -54,9 +54,9 @@ gulp.task('build-js', ["build-templates"], function () {
     return gulp.src(filesToBuild)
         .pipe(concat(finalName + '.js', { newLine: '\n' }))
         .pipe(gulp.dest(distDir))
-		// .pipe(rename(finalName + '.min.js'))
-		// .pipe(uglify())
-		// .pipe(gulp.dest(distDir));
+		.pipe(rename(finalName + '.min.js'))
+		.pipe(uglify())
+		.pipe(gulp.dest(distDir));
 });
 
 gulp.task('build-templates', function () {
