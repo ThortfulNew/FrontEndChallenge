@@ -1,7 +1,7 @@
 <h2 class="text-center">Repositories list</h2>
 
-<div ng-show="$ctrl.currentRepos.length" class="row">
-    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="col-sm-6" style="margin-bottom: 50px">
+<div ng-show="$ctrl.currentRepos.length" style="margin-top: 40px" class="row">
+    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="col-sm-5 repo" style="margin-bottom: 50px" ng-class="{'col-sm-offset-2': $index % 2 == 1}">
         <h3>{{repo.full_name}}</h3>
         <div style="min-height: 50px; font-size: 110%">{{repo.description | maxlength:250}}</div>
         <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}} <i class="fa fa-external-link" aria-hidden="true"></i></p>

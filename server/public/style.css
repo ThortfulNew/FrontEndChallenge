@@ -92,4 +92,11 @@ body {
     padding: 25px;
     margin: 20px;
     border-radius: 5px;
+    background: white;
+}
+
+.repo {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
 }
