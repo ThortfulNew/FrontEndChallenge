@@ -3,14 +3,14 @@
 
     angular.module('frontEndChallenge.search').component('search', {
         templateUrl: 'search/search.component.html',
-        controller: ["searchService", SearchController],
+        controller: ["searchService", "toaster", SearchController],
         bindings: {
             onRepos: '&',
             onLoading: '&'
         }
     });
 
-    function SearchController(searchService) {
+    function SearchController(searchService, toaster) {
         var vm = this;
 
         vm.search = function () {
@@ -20,7 +20,8 @@
                     vm.onRepos({ repos: data.items });
                 })
                 .catch(function (err) {
-                    console.error(err)
+                    console.error("Error getting repos:", err)
+                    toaster.pop('error', "Error", err.data.message)
                 })
                 .finally(function (err) {
                     vm.onLoading({ isLoading: false })

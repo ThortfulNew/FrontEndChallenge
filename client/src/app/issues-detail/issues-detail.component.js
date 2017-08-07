@@ -3,14 +3,14 @@
 
     angular.module('frontEndChallenge.issues').component('issuesDetail', {
         templateUrl: 'issues-detail/issues-detail.component.html',
-        controller: ["$scope", "issuesService", IssuesDetailController],
+        controller: ["$scope", "issuesService", "toaster", IssuesDetailController],
         bindings: {
             parameters: "<",
             onLoading: "&"
         }
     });
 
-    function IssuesDetailController($scope, issuesService) {
+    function IssuesDetailController($scope, issuesService, toaster) {
         var vm = this;
 
         $scope.$watch(function () {
@@ -32,7 +32,8 @@
                     initPagination(data.items);
                 })
                 .catch(function (err) {
-                    console.error(err)
+                    console.error("Error getting issues:", err)
+                    toaster.pop('error', "Error", err.data.message)
                 })
                 .finally(function () {
                     vm.onLoading({ isLoading: false })

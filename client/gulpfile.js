@@ -18,10 +18,13 @@ const cachedTemplates = distDir + '/templates.js'
 const bootstrapCSS = "./bower_components/bootstrap/dist/css/bootstrap.css"
 const bootstrapCSSMap = "./bower_components/bootstrap/dist/css/bootstrap.css.map"
 const fontAwesomeCSS = "./bower_components/font-awesome/css/font-awesome.css"
+const toasterCSS = "./bower_components/AngularJS-Toaster/toaster.min.css"
 const customCSS = "./src/style.css"
 
 const angularJS = "./bower_components/angular/angular.js"
 const angularSpinner = "./bower_components/angular-spinner/dist/angular-spinner.min.js"
+const angularAnimate = "./bower_components/angular-animate/angular-animate.min.js"
+const toaster = "./bower_components/AngularJS-Toaster/toaster.min.js";
 const modules = appDir + '/**/*.module.js'
 const components = appDir + '/**/*.component.js'
 const services = appDir + '/**/*.service.js'
@@ -38,6 +41,8 @@ gulp.task('build-js', ["build-templates"], function () {
     const filesToBuild = [
         angularJS,
         angularSpinner,
+        angularAnimate,
+        toaster,
         cachedTemplates,
         modules,
         services,
@@ -69,7 +74,7 @@ gulp.task('build-index', function () {
 });
 
 gulp.task('build-css', ["build-js"], function () {
-    return gulp.src([bootstrapCSS, bootstrapCSSMap, customCSS, fontAwesomeCSS])
+    return gulp.src([bootstrapCSS, bootstrapCSSMap, customCSS, fontAwesomeCSS, toasterCSS])
         .pipe(gulp.dest(distDir));
 });
 
