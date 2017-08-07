@@ -1,8 +1,12 @@
 <div class="container">
     <h1 class="text-center" style="margin-bottom: 50px">Github repository search</h1>
     <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">
+        <div class="col-sm-8 col-sm-offset-2">
             <search on-repos="$ctrl.onRepos(repos)" on-loading="$ctrl.setLoading(isLoading)"></search>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
             <div>
                 <repo-list ng-show="$ctrl.repos && !$ctrl.issueParameters && !$ctrl.isLoading" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)"
                     class="opaque animate-show-hide"></repo-list>

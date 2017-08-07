@@ -1,20 +1,27 @@
 <h2 class="text-center">Repositories list</h2>
 
 <div ng-show="$ctrl.currentRepos.length" class="row">
-    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="col-sm-6">
-        <h3 class="link" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">{{repo.full_name}}</h3>
-        <p ng-show="repo.description"><span class="field-name">Description: </span>{{repo.description}}</p>
-        <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}}</p>
+    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="col-sm-6" style="margin-bottom: 50px">
+        <h3>{{repo.full_name}}</h3>
+        <div style="min-height: 50px; font-size: 110%">{{repo.description | maxlength:250}}</div>
+        <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}} <i class="fa fa-external-link" aria-hidden="true"></i></p>
         <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>
-        <p ng-show="repo.language"><span class="field-name">Language: </span>{{repo.language}}</p>
-        <p><span class="field-name">Stars: </span>{{repo.stargazers_count}}</p>
-        <p><span class="field-name">Forks: </span>{{repo.forks}}</p>
+        <p>
+            <span style="margin-right:30px" ng-show="repo.language"><i class="fa fa-code field-name" aria-hidden="true"></i> {{repo.language}}</span>
+            <span style="margin-right:30px"><i class="fa fa-star field-name" aria-hidden="true"></i>{{repo.stargazers_count}}</span>
+            <i class="fa fa-code-fork field-name" aria-hidden="true"></i>{{repo.forks}}
+        </p>
+        <div style="margin-top: 30px">
+            <button class="btn btn-secondary" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">View issues</button>
+            <button open-in-new-tab="{{repo.html_url}}" style="margin-left: 20px" class="btn btn-secondary">Visit repo <i class="fa fa-external-link" aria-hidden="true"></i></button>
+        </div>
     </div>
 </div>
+
+<div ng-hide="$ctrl.currentRepos.length" style="font-size: 130%">
+    No repositories found
+</div>
+
 <ul ng-if="$ctrl.pages.length > 1" class="pagination">
     <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>
 </ul>
-
-<div ng-hide="$ctrl.currentRepos.length">
-    No repositories found
-</div>

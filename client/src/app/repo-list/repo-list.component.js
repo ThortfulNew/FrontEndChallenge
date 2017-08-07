@@ -20,6 +20,7 @@
                 initPagination(vm.repos);
             } else {
                 vm.currentRepos = null;
+                vm.pages = [];
             }
         })
 

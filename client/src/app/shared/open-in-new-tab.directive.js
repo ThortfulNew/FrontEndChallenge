@@ -11,7 +11,9 @@
                     $window.open(url, '_blank');
                 })
 
-                element.addClass("link");
+                if (element[0].tagName !== "BUTTON") {
+                    element.addClass("link");
+                }
             }
         };
     }]);
