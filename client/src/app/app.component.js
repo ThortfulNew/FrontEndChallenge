@@ -15,6 +15,10 @@
             vm.repos = repos;
         }
 
+        vm.setLoading = function (isLoading) {
+            vm.isLoading = isLoading
+        }
+
         vm.displayIssues = function (username, repo, index) {
             vm.selectedIssue = index;
             vm.issueParameters = {

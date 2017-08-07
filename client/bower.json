@@ -15,6 +15,7 @@
   "dependencies": {
     "angular": "^1.6.5",
     "bootstrap": "^3.3.7",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "angular-spinner": "^1.0.1"
   }
 }

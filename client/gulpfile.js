@@ -21,6 +21,7 @@ const fontAwesomeCSS = "./bower_components/font-awesome/css/font-awesome.css"
 const customCSS = "./src/style.css"
 
 const angularJS = "./bower_components/angular/angular.js"
+const angularSpinner = "./bower_components/angular-spinner/dist/angular-spinner.min.js"
 const modules = appDir + '/**/*.module.js'
 const components = appDir + '/**/*.component.js'
 const services = appDir + '/**/*.service.js'
@@ -36,6 +37,7 @@ gulp.task('build-js', ["build-templates"], function () {
 
     const filesToBuild = [
         angularJS,
+        angularSpinner,
         cachedTemplates,
         modules,
         services,
@@ -47,9 +49,9 @@ gulp.task('build-js', ["build-templates"], function () {
     return gulp.src(filesToBuild)
         .pipe(concat(finalName + '.js', { newLine: '\n' }))
         .pipe(gulp.dest(distDir))
-		.pipe(rename(finalName + '.min.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest(distDir));
+		// .pipe(rename(finalName + '.min.js'))
+		// .pipe(uglify())
+		// .pipe(gulp.dest(distDir));
 });
 
 gulp.task('build-templates', function () {

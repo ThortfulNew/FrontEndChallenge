@@ -5,7 +5,8 @@
         templateUrl: 'issues-detail/issues-detail.component.html',
         controller: ["$scope", "issuesService", IssuesDetailController],
         bindings: {
-            parameters: "<"
+            parameters: "<",
+            onLoading: "&"
         }
     });
 
@@ -21,12 +22,20 @@
         })
 
         function getIssues(username, repo) {
+            vm.onLoading({ isLoading: true })
+
             vm.username = username;
             vm.repo = repo;
 
             issuesService.getIssues(username, repo)
                 .then(function (data) {
                     initPagination(data.items);
+                })
+                .catch(function (err) {
+                    console.error(err)
+                })
+                .finally(function () {
+                    vm.onLoading({ isLoading: false })
                 })
         }
 

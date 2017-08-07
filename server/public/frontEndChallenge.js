@@ -33829,14 +33829,15 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-angular.module('fec_templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('app.component.html','<div class="container">\r\n    <h1 class="text-center" style="margin-bottom: 50px">Github repository search</h1>\r\n    <search on-repos="$ctrl.onRepos(repos)"></search>\r\n    <div class="row">\r\n        <div class="col-sm-6">\r\n            <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)" is-selected-issue="$ctrl.isSelectedIssue"></repo-list>\r\n        </div>\r\n        <div ng-if="$ctrl.issueParameters" class="col-sm-6" style="margin-top: 70px; border: 1px solid black; border-radius: 5px">\r\n            <i class="fa fa-window-close close-button" aria-hidden="true" ng-click="$ctrl.closeIssues()"></i>\r\n            <issues-detail parameters="$ctrl.issueParameters">\r\n        </div>\r\n    </div>\r\n</div>');
+!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n(require("angular"));else if("function"==typeof define&&define.amd)define(["angular"],n);else{var e=n("object"==typeof exports?require("angular"):t.angular);for(var i in e)("object"==typeof exports?exports:t)[i]=e[i]}}(this,function(t){return function(t){function n(i){if(e[i])return e[i].exports;var o=e[i]={exports:{},id:i,loaded:!1};return t[i].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="",n(0)}([function(t,n,e){"use strict";var i=e(4),o=e(6),r=e(5),s=e(3),p=e(1);n.angularSpinner=p.module("angularSpinner",[]).provider("usSpinnerConfig",s.UsSpinnerConfig).constant("SpinJSSpinner",i.SpinJSSpinner).service("usSpinnerService",o.UsSpinnerService).directive("usSpinner",r.usSpinner)},function(n,e){n.exports=t},function(t,n,e){var i,o;!function(r,s){"object"==typeof t&&t.exports?t.exports=s():(i=s,o="function"==typeof i?i.call(n,e,n,t):i,!(void 0!==o&&(t.exports=o)))}(this,function(){"use strict";function t(t,n){var e,i=document.createElement(t||"div");for(e in n)i[e]=n[e];return i}function n(t){for(var n=1,e=arguments.length;n<e;n++)t.appendChild(arguments[n]);return t}function e(t,n,e,i){var o=["opacity",n,~~(100*t),e,i].join("-"),r=.01+e/i*100,s=Math.max(1-(1-t)/n*(100-r),t),p=a.substring(0,a.indexOf("Animation")).toLowerCase(),c=p&&"-"+p+"-"||"";return f[o]||(u.insertRule("@"+c+"keyframes "+o+"{0%{opacity:"+s+"}"+r+"%{opacity:"+t+"}"+(r+.01)+"%{opacity:1}"+(r+n)%100+"%{opacity:"+t+"}100%{opacity:"+s+"}}",u.cssRules.length),f[o]=1),o}function i(t,n){var e,i,o=t.style;if(n=n.charAt(0).toUpperCase()+n.slice(1),void 0!==o[n])return n;for(i=0;i<l.length;i++)if(e=l[i]+n,void 0!==o[e])return e}function o(t,n){for(var e in n)t.style[i(t,e)||e]=n[e];return t}function r(t){for(var n=1;n<arguments.length;n++){var e=arguments[n];for(var i in e)void 0===t[i]&&(t[i]=e[i])}return t}function s(t,n){return"string"==typeof t?t:t[n%t.length]}function p(t){this.opts=r(t||{},p.defaults,d)}function c(){function e(n,e){return t("<"+n+' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">',e)}u.addRule(".spin-vml","behavior:url(#default#VML)"),p.prototype.lines=function(t,i){function r(){return o(e("group",{coordsize:u+" "+u,coordorigin:-a+" "+-a}),{width:u,height:u})}function p(t,p,c){n(f,n(o(r(),{rotation:360/i.lines*t+"deg",left:~~p}),n(o(e("roundrect",{arcsize:i.corners}),{width:a,height:i.scale*i.width,left:i.scale*i.radius,top:-i.scale*i.width>>1,filter:c}),e("fill",{color:s(i.color,t),opacity:i.opacity}),e("stroke",{opacity:0}))))}var c,a=i.scale*(i.length+i.width),u=2*i.scale*a,l=-(i.width+i.length)*i.scale*2+"px",f=o(r(),{position:"absolute",top:l,left:l});if(i.shadow)for(c=1;c<=i.lines;c++)p(c,-2,"progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");for(c=1;c<=i.lines;c++)p(c);return n(t,f)},p.prototype.opacity=function(t,n,e,i){var o=t.firstChild;i=i.shadow&&i.lines||0,o&&n+i<o.childNodes.length&&(o=o.childNodes[n+i],o=o&&o.firstChild,o=o&&o.firstChild,o&&(o.opacity=e))}}var a,u,l=["webkit","Moz","ms","O"],f={},d={lines:12,length:7,width:5,radius:10,scale:1,corners:1,color:"#000",opacity:.25,rotate:0,direction:1,speed:1,trail:100,fps:20,zIndex:2e9,className:"spinner",top:"50%",left:"50%",shadow:!1,hwaccel:!1,position:"absolute"};if(p.defaults={},r(p.prototype,{spin:function(n){this.stop();var e=this,i=e.opts,r=e.el=t(null,{className:i.className});if(o(r,{position:i.position,width:0,zIndex:i.zIndex,left:i.left,top:i.top}),n&&n.insertBefore(r,n.firstChild||null),r.setAttribute("role","progressbar"),e.lines(r,e.opts),!a){var s,p=0,c=(i.lines-1)*(1-i.direction)/2,u=i.fps,l=u/i.speed,f=(1-i.opacity)/(l*i.trail/100),d=l/i.lines;!function t(){p++;for(var n=0;n<i.lines;n++)s=Math.max(1-(p+(i.lines-n)*d)%l*f,i.opacity),e.opacity(r,n*i.direction+c,s,i);e.timeout=e.el&&setTimeout(t,~~(1e3/u))}()}return e},stop:function(){var t=this.el;return t&&(clearTimeout(this.timeout),t.parentNode&&t.parentNode.removeChild(t),this.el=void 0),this},lines:function(i,r){function p(n,e){return o(t(),{position:"absolute",width:r.scale*(r.length+r.width)+"px",height:r.scale*r.width+"px",background:n,boxShadow:e,transformOrigin:"left",transform:"rotate("+~~(360/r.lines*u+r.rotate)+"deg) translate("+r.scale*r.radius+"px,0)",borderRadius:(r.corners*r.scale*r.width>>1)+"px"})}for(var c,u=0,l=(r.lines-1)*(1-r.direction)/2;u<r.lines;u++)c=o(t(),{position:"absolute",top:1+~(r.scale*r.width/2)+"px",transform:r.hwaccel?"translate3d(0,0,0)":"",opacity:r.opacity,animation:a&&e(r.opacity,r.trail,l+u*r.direction,r.lines)+" "+1/r.speed+"s linear infinite"}),r.shadow&&n(c,o(p("#000","0 0 4px #000"),{top:"2px"})),n(i,n(c,p(s(r.color,u),"0 0 1px rgba(0,0,0,.1)")));return i},opacity:function(t,n,e){n<t.childNodes.length&&(t.childNodes[n].style.opacity=e)}}),"undefined"!=typeof document){u=function(){var e=t("style",{type:"text/css"});return n(document.getElementsByTagName("head")[0],e),e.sheet||e.styleSheet}();var h=o(t("group"),{behavior:"url(#default#VML)"});!i(h,"transform")&&h.adj?c():a=i(h,"animation")}return p})},function(t,n){"use strict";var e=function(){function t(){this.config={},this.themes={}}return t.prototype.setDefaults=function(t){this.config=t||this.config},t.prototype.setTheme=function(t,n){this.themes[t]=n},t.prototype.$get=function(){var t=this,n=t.config,e=t.themes;return{config:n,themes:e}},t}();n.UsSpinnerConfig=e},function(t,n,e){"use strict";var i=e(2);n.SpinJSSpinner=i},function(t,n,e){"use strict";var i=e(1);n.usSpinner=function(t,n){return{scope:!0,link:function(e,o,r){function s(){e.spinner&&e.spinner.stop()}e.spinner=null,e.key=!!i.isDefined(r.spinnerKey)&&r.spinnerKey,e.startActive=r.spinnerStartActive?e.$eval(r.spinnerStartActive):!e.key,e.spin=function(){e.spinner&&e.spinner.spin(o[0])},e.stop=function(){e.startActive=!1,s()},e.$watch(r.usSpinner,function(p){s(),p=i.extend({},n.config,r.spinnerTheme?n.themes[r.spinnerTheme]:void 0,p),e.spinner=new t(p),e.key&&!e.startActive||r.spinnerOn||e.spinner.spin(o[0])},!0),r.spinnerOn&&e.$watch(r.spinnerOn,function(t){t?e.spin():e.stop()}),e.$on("us-spinner:spin",function(t,n){n&&n!==e.key||e.spin()}),e.$on("us-spinner:stop",function(t,n){n&&n!==e.key||e.stop()}),e.$on("$destroy",function(){e.stop(),e.spinner=null})}}},n.usSpinner.$inject=["SpinJSSpinner","usSpinnerConfig"]},function(t,n){"use strict";var e=function(){function t(t){this.$rootScope=t}return t.prototype.spin=function(t){this.$rootScope.$broadcast("us-spinner:spin",t)},t.prototype.stop=function(t){this.$rootScope.$broadcast("us-spinner:stop",t)},t}();e.$inject=["$rootScope"],n.UsSpinnerService=e}])});
+angular.module('fec_templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('app.component.html','<div class="container">\r\n    <h1 class="text-center" style="margin-bottom: 50px">Github repository search</h1>\r\n    <div class="row">\r\n        <div class="col-sm-6">\r\n            <search on-repos="$ctrl.onRepos(repos)" on-loading="$ctrl.setLoading(isLoading)"></search>\r\n            <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)" is-selected-issue="$ctrl.isSelectedIssue"></repo-list>\r\n        </div>\r\n        <div ng-if="$ctrl.issueParameters" class="col-sm-6" style="margin-top: 70px; border: 1px solid black; border-radius: 5px">\r\n            <i class="fa fa-window-close close-button" aria-hidden="true" ng-click="$ctrl.closeIssues()"></i>\r\n            <issues-detail on-loading="$ctrl.setLoading(isLoading)" parameters="$ctrl.issueParameters">\r\n        </div>\r\n    </div>\r\n</div>\r\n<span ng-show="$ctrl.isLoading" us-spinner></span>');
 $templateCache.put('issues-detail/issues-detail.component.html','<div ng-show="$ctrl.currentIssues.length">\r\n\r\n    <h3>Issues in github.com/{{$ctrl.username + "/" + $ctrl.repo}}:</h3>\r\n\r\n    <div ng-repeat="issue in $ctrl.currentIssues" class="row">\r\n        <div class="col-sm-12">\r\n            <a href="{{issue.html_url}}" target="_blank">\r\n                <h4>{{issue.title}}</h4>\r\n            </a>\r\n            <p ng-show="issue.body"><span class="field-name">Description: </span>{{issue.body | maxlength:250}}</p>\r\n            <p open-in-new-tab="{{issue.assignee.html_url}}" ng-if="issue.assignee"><span class="field-name">Assignee: </span>{{issue.assignee.login}}</p>\r\n            <p><span class="field-name">State: </span>{{issue.state}} <span class="glyphicon glyphicon-{{$ctrl.isClosed(issue) ? \'ok\' : \'remove\'}}"\r\n                    ng-class="{closed: $ctrl.isClosed(issue), open: !$ctrl.isClosed(issue)}"></span></p>\r\n            <p><span class="field-name">Created at: </span>{{issue.created_at | date}}</p>\r\n            <p ng-hide="$ctrl.isClosed(issue)"><span class="field-name">Updated at: </span>{{issue.updated_at | date}}</p>\r\n            <p ng-show="$ctrl.isClosed(issue)"><span class="field-name">Closed at: </span>{{issue.closed_at | date}}</p>\r\n            <p>\r\n        </div>\r\n    </div>\r\n\r\n    <ul ng-if="$ctrl.pages.length > 1" class="pagination">\r\n        <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>\r\n    </ul>\r\n</div>\r\n\r\n<div ng-hide="$ctrl.currentIssues.length" style="padding: 20px">\r\n    No issues found in github.com/{{$ctrl.username + "/" + $ctrl.repo}}\r\n</div>');
 $templateCache.put('search/search.component.html','<form ng-submit="$ctrl.search()">\r\n    <div class="input-group">\r\n        <input class="form-control" ng-model="$ctrl.currentSearch" placeholder="Repository name">\r\n        <span class="input-group-btn">\r\n            <button class="btn btn-primary" type="submit" style="margin-left: 10px">Search Repository</button>\r\n        </span>\r\n    </div>\r\n</form>');
 $templateCache.put('repo-list/repo-list.component.html','<h2>Repositories list</h2>\r\n\r\n<div ng-show="$ctrl.currentRepos.length">\r\n    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="row" ng-class="{\'active-issue\': $ctrl.isSelectedIssue($index)}">\r\n        <div class="col-sm-12">\r\n            <h3 style="cursor: pointer;text-decoration: underline" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">{{repo.full_name}}</h3>\r\n            <p ng-show="repo.description"><span class="field-name">Description: </span>{{repo.description}}</p>\r\n            <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}}</p>\r\n            <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>\r\n            <p ng-show="repo.language"><span class="field-name">Language: </span>{{repo.language}}</p>\r\n            <p><span class="field-name">Stars: </span>{{repo.stargazers_count}}</p>\r\n            <p><span class="field-name">Forks: </span>{{repo.forks}}</p>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    <ul ng-if="$ctrl.pages.length > 1" class="pagination">\r\n        <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>\r\n    </ul>\r\n</div>\r\n\r\n<div ng-hide="$ctrl.currentRepos.length">\r\n    No repositories found\r\n</div>');}]);
 (function (window) {
     'use strict';
 
-    angular.module('frontEndChallenge', ['fec_templates', 'frontEndChallenge.search', 'frontEndChallenge.issues'])
+    angular.module('frontEndChallenge', ['fec_templates', 'frontEndChallenge.search', 'frontEndChallenge.issues', 'angularSpinner'])
 
 })(window);
 (function (window) {
@@ -33941,6 +33942,10 @@ $templateCache.put('repo-list/repo-list.component.html','<h2>Repositories list</
             vm.repos = repos;
         }
 
+        vm.setLoading = function (isLoading) {
+            vm.isLoading = isLoading
+        }
+
         vm.displayIssues = function (username, repo, index) {
             vm.selectedIssue = index;
             vm.issueParameters = {
@@ -33956,6 +33961,78 @@ $templateCache.put('repo-list/repo-list.component.html','<h2>Repositories list</
         vm.closeIssues = function () {
             vm.selectedIssue = null;
             vm.issueParameters = null;
+        }
+    }
+
+})(window);
+(function (window) {
+    'use strict';
+
+    angular.module('frontEndChallenge.issues').component('issuesDetail', {
+        templateUrl: 'issues-detail/issues-detail.component.html',
+        controller: ["$scope", "issuesService", IssuesDetailController],
+        bindings: {
+            parameters: "<",
+            onLoading: "&"
+        }
+    });
+
+    function IssuesDetailController($scope, issuesService) {
+        var vm = this;
+
+        $scope.$watch(function () {
+            return vm.parameters
+        }, function (newVal) {
+            if (newVal && newVal.username && newVal.repo) {
+                getIssues(newVal.username, newVal.repo)
+            }
+        })
+
+        function getIssues(username, repo) {
+            vm.onLoading({ isLoading: true })
+
+            vm.username = username;
+            vm.repo = repo;
+
+            issuesService.getIssues(username, repo)
+                .then(function (data) {
+                    initPagination(data.items);
+                })
+                .catch(function (err) {
+                    console.error(err)
+                })
+                .finally(function () {
+                    vm.onLoading({ isLoading: false })
+                })
+        }
+
+        vm.setPage = function (pageNum) {
+            vm.currentIssues = vm.pages[pageNum];
+            vm.currentPage = pageNum;
+        }
+
+        vm.isPageActive = function (pageNum) {
+            return pageNum == vm.currentPage;
+        }
+
+        vm.isClosed = function (issue) {
+            return issue.state == "closed"
+        }
+
+        function initPagination(issues) {
+            vm.currentPage = 0;
+            vm.pages = getPages(issues, 4)
+            vm.currentIssues = vm.pages[0];
+        }
+
+        function getPages(issues, pageSize) {
+            var pages = [];
+
+            while (issues.length > 0) {
+                pages.push(issues.splice(0, pageSize));
+            }
+
+            return pages;
         }
     }
 
@@ -34020,74 +34097,12 @@ $templateCache.put('repo-list/repo-list.component.html','<h2>Repositories list</
 (function (window) {
     'use strict';
 
-    angular.module('frontEndChallenge.issues').component('issuesDetail', {
-        templateUrl: 'issues-detail/issues-detail.component.html',
-        controller: ["$scope", "issuesService", IssuesDetailController],
-        bindings: {
-            parameters: "<"
-        }
-    });
-
-    function IssuesDetailController($scope, issuesService) {
-        var vm = this;
-
-        $scope.$watch(function () {
-            return vm.parameters
-        }, function (newVal) {
-            if (newVal && newVal.username && newVal.repo) {
-                getIssues(newVal.username, newVal.repo)
-            }
-        })
-
-        function getIssues(username, repo) {
-            vm.username = username;
-            vm.repo = repo;
-
-            issuesService.getIssues(username, repo)
-                .then(function (data) {
-                    initPagination(data.items);
-                })
-        }
-
-        vm.setPage = function (pageNum) {
-            vm.currentIssues = vm.pages[pageNum];
-            vm.currentPage = pageNum;
-        }
-
-        vm.isPageActive = function (pageNum) {
-            return pageNum == vm.currentPage;
-        }
-
-        vm.isClosed = function (issue) {
-            return issue.state == "closed"
-        }
-
-        function initPagination(issues) {
-            vm.currentPage = 0;
-            vm.pages = getPages(issues, 4)
-            vm.currentIssues = vm.pages[0];
-        }
-
-        function getPages(issues, pageSize) {
-            var pages = [];
-
-            while (issues.length > 0) {
-                pages.push(issues.splice(0, pageSize));
-            }
-
-            return pages;
-        }
-    }
-
-})(window);
-(function (window) {
-    'use strict';
-
     angular.module('frontEndChallenge.search').component('search', {
         templateUrl: 'search/search.component.html',
         controller: ["searchService", SearchController],
         bindings: {
-            onRepos: '&'
+            onRepos: '&',
+            onLoading: '&'
         }
     });
 
@@ -34095,12 +34110,16 @@ $templateCache.put('repo-list/repo-list.component.html','<h2>Repositories list</
         var vm = this;
 
         vm.search = function () {
+            vm.onLoading({ isLoading: true })
             searchService.getReposByName(vm.currentSearch)
                 .then(function (data) {
                     vm.onRepos({ repos: data.items });
                 })
                 .catch(function (err) {
                     console.error(err)
+                })
+                .finally(function (err) {
+                    vm.onLoading({ isLoading: false })
                 })
         }
     }

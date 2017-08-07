@@ -1,13 +1,14 @@
 <div class="container">
     <h1 class="text-center" style="margin-bottom: 50px">Github repository search</h1>
-    <search on-repos="$ctrl.onRepos(repos)"></search>
     <div class="row">
         <div class="col-sm-6">
+            <search on-repos="$ctrl.onRepos(repos)" on-loading="$ctrl.setLoading(isLoading)"></search>
             <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)" is-selected-issue="$ctrl.isSelectedIssue"></repo-list>
         </div>
         <div ng-if="$ctrl.issueParameters" class="col-sm-6" style="margin-top: 70px; border: 1px solid black; border-radius: 5px">
             <i class="fa fa-window-close close-button" aria-hidden="true" ng-click="$ctrl.closeIssues()"></i>
-            <issues-detail parameters="$ctrl.issueParameters">
+            <issues-detail on-loading="$ctrl.setLoading(isLoading)" parameters="$ctrl.issueParameters">
         </div>
     </div>
 </div>
+<span ng-show="$ctrl.isLoading" us-spinner></span>

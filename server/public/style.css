@@ -15,6 +15,10 @@ a {
     text-decoration: underline;
 }
 
+body {
+    background: #faead1;
+}
+
 .field-name {    
     color: #30638e;
     font-weight: 550;
@@ -53,4 +57,9 @@ a {
 
 .active-issue {
     border-left: 2px solid #003d5b;
+}
+
+.pagination > .active > a {
+    background: #003d5b;
+    border-color: #003d5b;
 }
