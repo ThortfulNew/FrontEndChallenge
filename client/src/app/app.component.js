@@ -27,10 +27,6 @@
             }
         }
 
-        vm.isSelectedIssue = function (issueIndex) {
-            return vm.selectedIssue == issueIndex
-        }
-
         vm.closeIssues = function () {
             vm.selectedIssue = null;
             vm.issueParameters = null;

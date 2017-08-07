@@ -15,6 +15,7 @@
 
         vm.search = function () {
             vm.onLoading({ isLoading: true })
+            vm.onRepos({ repos: null });
             searchService.getReposByName(vm.currentSearch)
                 .then(function (data) {
                     vm.onRepos({ repos: data.items });

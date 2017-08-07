@@ -11,7 +11,7 @@
                     $window.open(url, '_blank');
                 })
 
-                element.css({ 'cursor': 'pointer' });
+                element.addClass("link");
             }
         };
     }]);

@@ -33901,9 +33901,9 @@ return e}}}else return d(a)}}]}])})(window,window.angular);
  * Related to project of John Papa, Hans Fjällemark and Nguyễn Thiện Hùng (thienhung1989)
  */
 !function(a,b){"use strict";angular.module("toaster",[]).constant("toasterConfig",{limit:0,"tap-to-dismiss":!0,"close-button":!1,"close-html":'<button class="toast-close-button" type="button">&times;</button>',"newest-on-top":!0,"time-out":5e3,"icon-classes":{error:"toast-error",info:"toast-info",wait:"toast-wait",success:"toast-success",warning:"toast-warning"},"body-output-type":"","body-template":"toasterBodyTmpl.html","icon-class":"toast-info","position-class":"toast-top-right","title-class":"toast-title","message-class":"toast-message","prevent-duplicates":!1,"mouseover-timer-stop":!0}).run(["$templateCache",function(a){a.put("angularjs-toaster/toast.html",'<div id="toast-container" ng-class="[config.position, config.animation]"><div ng-repeat="toaster in toasters" class="toast" ng-class="toaster.type" ng-click="click($event, toaster)" ng-mouseover="stopTimer(toaster)" ng-mouseout="restartTimer(toaster)"><div ng-if="toaster.showCloseButton" ng-click="click($event, toaster, true)" ng-bind-html="toaster.closeHtml"></div><div ng-class="config.title">{{toaster.title}}</div><div ng-class="config.message" ng-switch on="toaster.bodyOutputType"><div ng-switch-when="trustedHtml" ng-bind-html="toaster.html"></div><div ng-switch-when="template"><div ng-include="toaster.bodyTemplate"></div></div><div ng-switch-when="templateWithData"><div ng-include="toaster.bodyTemplate"></div></div><div ng-switch-when="directive"><div directive-template directive-name="{{toaster.html}}" directive-data="{{toaster.directiveData}}"></div></div><div ng-switch-default >{{toaster.body}}</div></div></div></div>')}]).service("toaster",["$rootScope","toasterConfig",function(a,b){function e(a){return function(b,c,d,e,f,g,h,i,j){return angular.isString(b)?this.pop(a,b,c,d,e,f,g,h,i,j):this.pop(angular.extend(b,{type:a}))}}var c=function(){var a={};return a.newGuid=function(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(a){var b=16*Math.random()|0,c="x"==a?b:3&b|8;return c.toString(16)})},a}();this.pop=function(b,d,e,f,g,h,i,j,k,l){if(angular.isObject(b)){var m=b;this.toast={type:m.type,title:m.title,body:m.body,timeout:m.timeout,bodyOutputType:m.bodyOutputType,clickHandler:m.clickHandler,showCloseButton:m.showCloseButton,closeHtml:m.closeHtml,toastId:m.toastId,onShowCallback:m.onShowCallback,onHideCallback:m.onHideCallback,directiveData:m.directiveData,tapToDismiss:m.tapToDismiss},i=m.toasterId}else this.toast={type:b,title:d,body:e,timeout:f,bodyOutputType:g,clickHandler:h,showCloseButton:j,toastId:k,onHideCallback:l};return this.toast.toastId&&this.toast.toastId.length||(this.toast.toastId=c.newGuid()),a.$emit("toaster-newToast",i,this.toast.toastId),{toasterId:i,toastId:this.toast.toastId}},this.clear=function(b,c){angular.isObject(b)?a.$emit("toaster-clearToasts",b.toasterId,b.toastId):a.$emit("toaster-clearToasts",b,c)};for(var d in b["icon-classes"])this[d]=e(d)}]).factory("toasterEventRegistry",["$rootScope",function(a){var f,b=null,c=null,d=[],e=[];return f={setup:function(){b||(b=a.$on("toaster-newToast",function(a,b,c){for(var e=0,f=d.length;e<f;e++)d[e](a,b,c)})),c||(c=a.$on("toaster-clearToasts",function(a,b,c){for(var d=0,f=e.length;d<f;d++)e[d](a,b,c)}))},subscribeToNewToastEvent:function(a){d.push(a)},subscribeToClearToastsEvent:function(a){e.push(a)},unsubscribeToNewToastEvent:function(a){var c=d.indexOf(a);c>=0&&d.splice(c,1),0===d.length&&(b(),b=null)},unsubscribeToClearToastsEvent:function(a){var b=e.indexOf(a);b>=0&&e.splice(b,1),0===e.length&&(c(),c=null)}},{setup:f.setup,subscribeToNewToastEvent:f.subscribeToNewToastEvent,subscribeToClearToastsEvent:f.subscribeToClearToastsEvent,unsubscribeToNewToastEvent:f.unsubscribeToNewToastEvent,unsubscribeToClearToastsEvent:f.unsubscribeToClearToastsEvent}}]).directive("directiveTemplate",["$compile","$injector",function(a,b){return{restrict:"A",scope:{directiveName:"@directiveName",directiveData:"@directiveData"},replace:!0,link:function(c,d,e){c.$watch("directiveName",function(f){if(angular.isUndefined(f)||f.length<=0)throw new Error("A valid directive name must be provided via the toast body argument when using bodyOutputType: directive");var g;try{g=b.get(e.$normalize(f)+"Directive")}catch(a){throw new Error(f+" could not be found. The name should appear as it exists in the markup, not camelCased as it would appear in the directive declaration, e.g. directive-name not directiveName.")}var h=g[0];if(h.scope!==!0&&h.scope)throw new Error("Cannot use a directive with an isolated scope. The scope must be either true or falsy (e.g. false/null/undefined). Occurred for directive "+f+".");if(h.restrict.indexOf("A")<0)throw new Error('Directives must be usable as attributes. Add "A" to the restrict option (or remove the option entirely). Occurred for directive '+f+".");c.directiveData&&(c.directiveData=angular.fromJson(c.directiveData));var i=a("<div "+f+"></div>")(c);d.append(i)})}}}]).directive("toasterContainer",["$parse","$rootScope","$interval","$sce","toasterConfig","toaster","toasterEventRegistry",function(a,b,c,d,e,f,g){return{replace:!0,restrict:"EA",scope:!0,link:function(b,h,i){function k(a,d){a.timeoutPromise=c(function(){b.removeToast(a.toastId)},d,1)}function l(c,e){if(c.type=j["icon-classes"][c.type],c.type||(c.type=j["icon-class"]),j["prevent-duplicates"]===!0&&b.toasters.length){if(b.toasters[b.toasters.length-1].body===c.body)return;var f,g,h=!1;for(f=0,g=b.toasters.length;f<g;f++)if(b.toasters[f].toastId===e){h=!0;break}if(h)return}var i=j["close-button"];if("boolean"==typeof c.showCloseButton);else if("boolean"==typeof i)c.showCloseButton=i;else if("object"==typeof i){var k=i[c.type];"undefined"!=typeof k&&null!==k&&(c.showCloseButton=k)}else c.showCloseButton=!1;switch(c.showCloseButton&&(c.closeHtml=d.trustAsHtml(c.closeHtml||b.config.closeHtml)),c.bodyOutputType=c.bodyOutputType||j["body-output-type"],c.bodyOutputType){case"trustedHtml":c.html=d.trustAsHtml(c.body);break;case"template":c.bodyTemplate=c.body||j["body-template"];break;case"templateWithData":var l=a(c.body||j["body-template"]),m=l(b);c.bodyTemplate=m.template,c.data=m.data;break;case"directive":c.html=c.body}b.configureTimer(c),j["newest-on-top"]===!0?(b.toasters.unshift(c),j.limit>0&&b.toasters.length>j.limit&&b.toasters.pop()):(b.toasters.push(c),j.limit>0&&b.toasters.length>j.limit&&b.toasters.shift()),angular.isFunction(c.onShowCallback)&&c.onShowCallback()}function m(a){var d=b.toasters[a];d.timeoutPromise&&c.cancel(d.timeoutPromise),b.toasters.splice(a,1),angular.isFunction(d.onHideCallback)&&d.onHideCallback()}function n(a){for(var c=b.toasters.length-1;c>=0;c--)o(a)?m(c):b.toasters[c].toastId==a&&m(c)}function o(a){return angular.isUndefined(a)||null===a}var j;j=angular.extend({},e,b.$eval(i.toasterOptions)),b.config={toasterId:j["toaster-id"],position:j["position-class"],title:j["title-class"],message:j["message-class"],tap:j["tap-to-dismiss"],closeButton:j["close-button"],closeHtml:j["close-html"],animation:j["animation-class"],mouseoverTimer:j["mouseover-timer-stop"]},b.$on("$destroy",function(){g.unsubscribeToNewToastEvent(b._onNewToast),g.unsubscribeToClearToastsEvent(b._onClearToasts)}),b.configureTimer=function(a){var b=angular.isNumber(a.timeout)?a.timeout:j["time-out"];"object"==typeof b&&(b=b[a.type]),b>0&&k(a,b)},b.removeToast=function(a){var c,d;for(c=0,d=b.toasters.length;c<d;c++)if(b.toasters[c].toastId===a){m(c);break}},b.toasters=[],b._onNewToast=function(a,c,d){(o(b.config.toasterId)&&o(c)||!o(b.config.toasterId)&&!o(c)&&b.config.toasterId==c)&&l(f.toast,d)},b._onClearToasts=function(a,c,d){("*"==c||o(b.config.toasterId)&&o(c)||!o(b.config.toasterId)&&!o(c)&&b.config.toasterId==c)&&n(d)},g.setup(),g.subscribeToNewToastEvent(b._onNewToast),g.subscribeToClearToastsEvent(b._onClearToasts)},controller:["$scope","$element","$attrs",function(a,b,d){a.stopTimer=function(b){a.config.mouseoverTimer===!0&&b.timeoutPromise&&(c.cancel(b.timeoutPromise),b.timeoutPromise=null)},a.restartTimer=function(b){a.config.mouseoverTimer===!0?b.timeoutPromise||a.configureTimer(b):null===b.timeoutPromise&&a.removeToast(b.toastId)},a.click=function(b,c,d){b.stopPropagation();var e="boolean"==typeof c.tapToDismiss?c.tapToDismiss:a.config.tap;if(e===!0||c.showCloseButton===!0&&d===!0){var f=!0;c.clickHandler&&(angular.isFunction(c.clickHandler)?f=c.clickHandler(c,d):angular.isFunction(a.$parent.$eval(c.clickHandler))?f=a.$parent.$eval(c.clickHandler)(c,d):console.log("TOAST-NOTE: Your click handler is not inside a parent scope of toaster-container.")),f&&a.removeToast(c.toastId)}}}],templateUrl:"angularjs-toaster/toast.html"}}])}(window,document);
-angular.module('fec_templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('app.component.html','<div class="container">\r\n    <h1 class="text-center" style="margin-bottom: 50px">Github repository search</h1>\r\n    <div class="row">\r\n        <div class="col-sm-6">\r\n            <search on-repos="$ctrl.onRepos(repos)" on-loading="$ctrl.setLoading(isLoading)"></search>\r\n            <repo-list ng-if="$ctrl.repos" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)" is-selected-issue="$ctrl.isSelectedIssue"></repo-list>\r\n        </div>\r\n        <div ng-if="$ctrl.issueParameters" class="col-sm-6" style="margin-top: 70px; border: 1px solid black; border-radius: 5px">\r\n            <i class="fa fa-window-close close-button" aria-hidden="true" ng-click="$ctrl.closeIssues()"></i>\r\n            <issues-detail on-loading="$ctrl.setLoading(isLoading)" parameters="$ctrl.issueParameters">\r\n        </div>\r\n    </div>\r\n</div>\r\n<span ng-show="$ctrl.isLoading" us-spinner></span>\r\n<toaster-container></toaster-container>');
+angular.module('fec_templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('app.component.html','<div class="container">\r\n    <h1 class="text-center" style="margin-bottom: 50px">Github repository search</h1>\r\n    <div class="row">\r\n        <div class="col-sm-10 col-sm-offset-1">\r\n            <search on-repos="$ctrl.onRepos(repos)" on-loading="$ctrl.setLoading(isLoading)"></search>\r\n            <div>\r\n                <repo-list ng-show="$ctrl.repos && !$ctrl.issueParameters && !$ctrl.isLoading" repos="$ctrl.repos" on-repo-click="$ctrl.displayIssues(username, repo, index)"\r\n                    class="opaque animate-show-hide"></repo-list>\r\n                <div ng-show="$ctrl.issueParameters && !$ctrl.isLoading" class="opaque animate-show-hide" style="border: 1px solid black;padding: 25px;margin: 20px;border-radius: 5px">\r\n                    <i class="fa fa-window-close close-button" aria-hidden="true" ng-click="$ctrl.closeIssues()"></i>\r\n                    <issues-detail on-loading="$ctrl.setLoading(isLoading)" parameters="$ctrl.issueParameters">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<span ng-show="$ctrl.isLoading" us-spinner></span>\r\n<toaster-container></toaster-container>');
+$templateCache.put('repo-list/repo-list.component.html','<h2 class="text-center">Repositories list</h2>\r\n\r\n<div ng-show="$ctrl.currentRepos.length" class="row">\r\n    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="col-sm-6">\r\n        <h3 class="link" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">{{repo.full_name}}</h3>\r\n        <p ng-show="repo.description"><span class="field-name">Description: </span>{{repo.description}}</p>\r\n        <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}}</p>\r\n        <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>\r\n        <p ng-show="repo.language"><span class="field-name">Language: </span>{{repo.language}}</p>\r\n        <p><span class="field-name">Stars: </span>{{repo.stargazers_count}}</p>\r\n        <p><span class="field-name">Forks: </span>{{repo.forks}}</p>\r\n    </div>\r\n</div>\r\n<ul ng-if="$ctrl.pages.length > 1" class="pagination">\r\n    <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>\r\n</ul>\r\n\r\n<div ng-hide="$ctrl.currentRepos.length">\r\n    No repositories found\r\n</div>');
 $templateCache.put('issues-detail/issues-detail.component.html','<div ng-show="$ctrl.currentIssues.length">\r\n\r\n    <h3>Issues in github.com/{{$ctrl.username + "/" + $ctrl.repo}}:</h3>\r\n\r\n    <div ng-repeat="issue in $ctrl.currentIssues" class="row">\r\n        <div class="col-sm-12">\r\n            <a href="{{issue.html_url}}" target="_blank">\r\n                <h4>{{issue.title}}</h4>\r\n            </a>\r\n            <p ng-show="issue.body"><span class="field-name">Description: </span>{{issue.body | maxlength:250}}</p>\r\n            <p open-in-new-tab="{{issue.assignee.html_url}}" ng-if="issue.assignee"><span class="field-name">Assignee: </span>{{issue.assignee.login}}</p>\r\n            <p><span class="field-name">State: </span>{{issue.state}} <span class="glyphicon glyphicon-{{$ctrl.isClosed(issue) ? \'ok\' : \'remove\'}}"\r\n                    ng-class="{closed: $ctrl.isClosed(issue), open: !$ctrl.isClosed(issue)}"></span></p>\r\n            <p><span class="field-name">Created at: </span>{{issue.created_at | date}}</p>\r\n            <p ng-hide="$ctrl.isClosed(issue)"><span class="field-name">Updated at: </span>{{issue.updated_at | date}}</p>\r\n            <p ng-show="$ctrl.isClosed(issue)"><span class="field-name">Closed at: </span>{{issue.closed_at | date}}</p>\r\n            <p>\r\n        </div>\r\n    </div>\r\n\r\n    <ul ng-if="$ctrl.pages.length > 1" class="pagination">\r\n        <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>\r\n    </ul>\r\n</div>\r\n\r\n<div ng-hide="$ctrl.currentIssues.length" style="padding: 20px">\r\n    No issues found in github.com/{{$ctrl.username + "/" + $ctrl.repo}}\r\n</div>');
-$templateCache.put('repo-list/repo-list.component.html','<h2>Repositories list</h2>\r\n\r\n<div ng-show="$ctrl.currentRepos.length">\r\n    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="row" ng-class="{\'active-issue\': $ctrl.isSelectedIssue($index)}">\r\n        <div class="col-sm-12">\r\n            <h3 style="cursor: pointer;text-decoration: underline" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">{{repo.full_name}}</h3>\r\n            <p ng-show="repo.description"><span class="field-name">Description: </span>{{repo.description}}</p>\r\n            <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}}</p>\r\n            <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>\r\n            <p ng-show="repo.language"><span class="field-name">Language: </span>{{repo.language}}</p>\r\n            <p><span class="field-name">Stars: </span>{{repo.stargazers_count}}</p>\r\n            <p><span class="field-name">Forks: </span>{{repo.forks}}</p>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    <ul ng-if="$ctrl.pages.length > 1" class="pagination">\r\n        <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>\r\n    </ul>\r\n</div>\r\n\r\n<div ng-hide="$ctrl.currentRepos.length">\r\n    No repositories found\r\n</div>');
 $templateCache.put('search/search.component.html','<form ng-submit="$ctrl.search()">\r\n    <div class="input-group">\r\n        <input class="form-control" ng-model="$ctrl.currentSearch" placeholder="Repository name">\r\n        <span class="input-group-btn">\r\n            <button class="btn btn-primary" type="submit" style="margin-left: 10px">Search Repository</button>\r\n        </span>\r\n    </div>\r\n</form>');}]);
 (function (window) {
     'use strict';
@@ -33990,7 +33990,7 @@ $templateCache.put('search/search.component.html','<form ng-submit="$ctrl.search
                     $window.open(url, '_blank');
                 })
 
-                element.css({ 'cursor': 'pointer' });
+                element.addClass("link");
             }
         };
     }]);
@@ -34025,13 +34025,65 @@ $templateCache.put('search/search.component.html','<form ng-submit="$ctrl.search
             }
         }
 
-        vm.isSelectedIssue = function (issueIndex) {
-            return vm.selectedIssue == issueIndex
-        }
-
         vm.closeIssues = function () {
             vm.selectedIssue = null;
             vm.issueParameters = null;
+        }
+    }
+
+})(window);
+(function (window) {
+    'use strict';
+
+    angular.module('frontEndChallenge').component('repoList', {
+        templateUrl: 'repo-list/repo-list.component.html',
+        controller: ["$scope", RepoListController],
+        bindings: {
+            repos: '<',
+            onRepoClick: '&'
+        }
+    });
+
+    function RepoListController($scope) {
+        var vm = this;
+
+        $scope.$watch(function () {
+            return vm.repos
+        }, function (newVal) {
+            if (newVal && newVal.length) {
+                initPagination(vm.repos);
+            } else {
+                vm.currentRepos = null;
+            }
+        })
+
+        vm.displayIssues = function (username, repo, index) {
+            vm.onRepoClick({ username: username, repo: repo, index: index })
+        }
+
+        vm.setPage = function (pageNum) {
+            vm.currentRepos = vm.pages[pageNum];
+            vm.currentPage = pageNum;
+        }
+
+        vm.isPageActive = function (pageNum) {
+            return pageNum == vm.currentPage;
+        }
+
+        function initPagination(repos) {
+            vm.currentPage = 0;
+            vm.pages = getPages(repos, 4)
+            vm.currentRepos = vm.pages[0];
+        }
+
+        function getPages(repos, pageSize) {
+            var pages = [];
+
+            while (repos.length > 0) {
+                pages.push(repos.splice(0, pageSize));
+            }
+
+            return pages;
         }
     }
 
@@ -34112,63 +34164,6 @@ $templateCache.put('search/search.component.html','<form ng-submit="$ctrl.search
 (function (window) {
     'use strict';
 
-    angular.module('frontEndChallenge').component('repoList', {
-        templateUrl: 'repo-list/repo-list.component.html',
-        controller: ["$scope", RepoListController],
-        bindings: {
-            repos: '<',
-            onRepoClick: '&',
-            isSelectedIssue: '<'
-        }
-    });
-
-    function RepoListController($scope) {
-        var vm = this;
-
-        $scope.$watch(function () {
-            return vm.repos
-        }, function (newVal) {
-            if (newVal && newVal.length) {
-                initPagination(vm.repos);
-            } else {
-                vm.currentRepos = null;
-            }
-        })
-
-        vm.displayIssues = function (username, repo, index) {
-            vm.onRepoClick({ username: username, repo: repo, index: index })
-        }
-
-        vm.setPage = function (pageNum) {
-            vm.currentRepos = vm.pages[pageNum];
-            vm.currentPage = pageNum;
-        }
-
-        vm.isPageActive = function (pageNum) {
-            return pageNum == vm.currentPage;
-        }
-
-        function initPagination(repos) {
-            vm.currentPage = 0;
-            vm.pages = getPages(repos, 4)
-            vm.currentRepos = vm.pages[0];
-        }
-
-        function getPages(repos, pageSize) {
-            var pages = [];
-
-            while (repos.length > 0) {
-                pages.push(repos.splice(0, pageSize));
-            }
-
-            return pages;
-        }
-    }
-
-})(window);
-(function (window) {
-    'use strict';
-
     angular.module('frontEndChallenge.search').component('search', {
         templateUrl: 'search/search.component.html',
         controller: ["searchService", "toaster", SearchController],
@@ -34183,6 +34178,7 @@ $templateCache.put('search/search.component.html','<form ng-submit="$ctrl.search
 
         vm.search = function () {
             vm.onLoading({ isLoading: true })
+            vm.onRepos({ repos: null });
             searchService.getReposByName(vm.currentSearch)
                 .then(function (data) {
                     vm.onRepos({ repos: data.items });

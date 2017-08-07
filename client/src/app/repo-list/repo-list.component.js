@@ -6,8 +6,7 @@
         controller: ["$scope", RepoListController],
         bindings: {
             repos: '<',
-            onRepoClick: '&',
-            isSelectedIssue: '<'
+            onRepoClick: '&'
         }
     });
 
