@@ -1,4 +1,6 @@
-## Live in https://front-end-challenge.herokuapp.com/
+# FrontEndChallenge
+
+### Live in https://front-end-challenge.herokuapp.com/
 
 ## To run locally
 
@@ -12,60 +14,49 @@ Run this commands:
 
 ### Server folder
 
+Run this commands:
+
 * npm install
 * node app
 * go to http://localhost:3000
 
 ## Usage
 
-* Open http://localhost:3000
+* Open the site
 * Write a repository name in the input field
 * Press enter or click the button
-* Now you will see a list with the found repositories
-    1) click on the repository name to open the issues detail
-    2) click on the owner name to open their github page
-    3) go to another page to keep looking
-* The issues view is quite similar
-
-## Other comments
-
-I hope you appreciate the JavaScript part more than the UI :)
-
-I feel this is still in early development and could do with more functionality and details, but hopefully it shows enough of my coding style. 
-
-Also, some parts may not follow any standard, I have been "testing new paths".
+* Now you will see a list with the found repositories:
+    1) You can open the repository in a new tab
+    2) You can view the issues in the current page
+    3) You can open the owner's github page in a new tab
+    3) You can go to the next page (if there are more repositories matching the search)
+* In the issues view:
+    1) You can see their state
+    2) You can open their github page in a new tab
+    3) You can also open the assignee's profile in a new tab
+    4) You can go to the next page, as with the repositories
 
 
-# Thortful Front End Fever
+## Technologies
 
-Show us what you can do and how clean your code is! Write a JavaScript / Coffeescript app using AngularJS that will allow a user to search a repository by name and display a repository's relevant information such as URL, description, forks count, stargazers count, open issues count etc.
+### Front-end
 
-Also, display the available issues of a repository in a separate section in the UI:
+* AngularJS to create most of the logic.
+* Bootstrap to help with the styles.
+* Font-awesome for their icons.
+* Angular-spinner, self explanatory :)
+* AngularJS-Toaster to display error messages. You may not notice it, but if you the github API fails, it will display nice error messages! You can test it by spamming the search 10-15 times.
+* Angular-animate for toaster and the animations on repository and issue list load.
+* Gulp and its packages to build the project
 
-* Implement the best design possible for the user interface - search and search results, and issues section.
-* You can use Twitter Bootstrap and any JavaScript libraries to support AngularJS (Underscore etc).
-* Use best practices in writing JavaScript / Coffeescript, CSS, and HTML.
-* Write clearly and use proper MVC structure to write the application.
+### Back-end
 
-Bonus: Add another section for visualisation chart (using a JavaScript charting library that you already know) for the number of forks, open issues, stargazer count, watchers count, or any relevant information about the repository.
+* Node with Expressjs, a light-weight server. By the way, if you have looked inside server/app.js, that code is more complicated than it should because I was expecting to use angular routes but decided to keep it lighter at the end.
 
-Few useful URLs:
-* Sample API URL to search by repository name	https://api.github.com/search/repositories?q=bootstrap
-* API URL to display issues of a repository name	https://api.github.com/search/issues?q=repo:username/reponame
-* Example: Display Issues of Bootstrap	https://api.github.com/search/issues?q=repo:twbs/bootstrap
-* API Documentation	https://developer.github.com/v3/search/#search-issues
-* GItHub Search API Documentation	https://developer.github.com/v3/search/ 
+## Comments
 
-We could be sneaky and not say anything else, but here's some things we're looking to see:
+I believe the AngularJS and Gulp code is the most interesting part of this application. Hopefully the UI is decent too! You should have seen the original one... :D
 
-* An app we can try :)
-* Use of existing open source libraries
-* Something not looking like a web site from 1993s, We do like how the internet looks today :)
+Also, some parts may not follow standards, as I was exploring different approaches.
 
-### Submission notes
-
-You can just submit a PR here, create a private repo for free on [GitLab](https://www.gitlab.com/?gclid=CLCBmaWM474CFaMSwwodAqIAqw) or [Bitbucket](https://bitbucket.org/), or just send us the repo by email. Whatever you prefer.
-
----
-
-[@HowThortful](https://thortful.com) - 2015
+Please let me know your thoughts and the things you would do differently.
