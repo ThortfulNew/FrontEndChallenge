@@ -45,7 +45,7 @@ Run this commands:
 * Bootstrap to help with the styles.
 * Font-awesome for their icons.
 * Angular-spinner, self explanatory :)
-* AngularJS-Toaster to display error messages. You may not notice it, but if you the github API fails, it will display nice error messages! You can test it by spamming the search 10-15 times.
+* AngularJS-Toaster to display error messages. You may not notice it, but if the github API fails, it will display nice error messages! You can test it by searching nothing (now that I think about it, ng-disabled would have been good there) or searching for the same thing 10-15 times (Github will block your IP address for some seconds).
 * Angular-animate for toaster and the animations on repository and issue list load.
 * Gulp and its packages to build the project
 
