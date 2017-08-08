@@ -1,33 +1,62 @@
-# Thortful Front End Fever
+# FrontEndChallenge
 
-Show us what you can do and how clean your code is! Write a JavaScript / Coffeescript app using AngularJS that will allow a user to search a repository by name and display a repository's relevant information such as URL, description, forks count, stargazers count, open issues count etc.
+### Live in https://front-end-challenge.herokuapp.com/
 
-Also, display the available issues of a repository in a separate section in the UI:
+## To run locally
 
-* Implement the best design possible for the user interface - search and search results, and issues section.
-* You can use Twitter Bootstrap and any JavaScript libraries to support AngularJS (Underscore etc).
-* Use best practices in writing JavaScript / Coffeescript, CSS, and HTML.
-* Write clearly and use proper MVC structure to write the application.
+### Client folder
 
-Bonus: Add another section for visualisation chart (using a JavaScript charting library that you already know) for the number of forks, open issues, stargazer count, watchers count, or any relevant information about the repository.
+Run this commands:
 
-Few useful URLs:
-* Sample API URL to search by repository name	https://api.github.com/search/repositories?q=bootstrap
-* API URL to display issues of a repository name	https://api.github.com/search/issues?q=repo:username/reponame
-* Example: Display Issues of Bootstrap	https://api.github.com/search/issues?q=repo:twbs/bootstrap
-* API Documentation	https://developer.github.com/v3/search/#search-issues
-* GItHub Search API Documentation	https://developer.github.com/v3/search/ 
+* npm install
+* bower install
+* gulp
 
-We could be sneaky and not say anything else, but here's some things we're looking to see:
+### Server folder
 
-* An app we can try :)
-* Use of existing open source libraries
-* Something not looking like a web site from 1993s, We do like how the internet looks today :)
+Run this commands:
 
-### Submission notes
+* npm install
+* node app
+* go to http://localhost:3000
 
-You can just submit a PR here, create a private repo for free on [GitLab](https://www.gitlab.com/?gclid=CLCBmaWM474CFaMSwwodAqIAqw) or [Bitbucket](https://bitbucket.org/), or just send us the repo by email. Whatever you prefer.
+## Usage
 
----
+* Open the site
+* Write a repository name in the input field
+* Press enter or click the button
+* Now you will see a list with the found repositories:
+    1) You can open the repository in a new tab
+    2) You can view the issues in the current page
+    3) You can open the owner's github page in a new tab
+    3) You can go to the next page (if there are more repositories matching the search)
+* In the issues view:
+    1) You can see their state
+    2) You can open their github page in a new tab
+    3) You can also open the assignee's profile in a new tab
+    4) You can go to the next page, as with the repositories
 
-[@HowThortful](https://thortful.com) - 2015
+
+## Technologies
+
+### Front-end
+
+* AngularJS to create most of the logic.
+* Bootstrap to help with the styles.
+* Font-awesome for their icons.
+* Angular-spinner, self explanatory :)
+* AngularJS-Toaster to display error messages. You may not notice it, but if the github API fails, it will display nice error messages! You can test it by searching nothing (now that I think about it, ng-disabled would have been good there) or searching for the same thing 10-15 times (Github will block your IP address for some seconds).
+* Angular-animate for toaster and the animations on repository and issue list load.
+* Gulp and its packages to build the project
+
+### Back-end
+
+* Node with Expressjs, a light-weight server. By the way, if you have looked inside server/app.js, that code is more complicated than it should because I was expecting to use angular routes but decided to keep it lighter at the end.
+
+## Comments
+
+I believe the AngularJS and Gulp code is the most interesting part of this application. Hopefully the UI is decent too! You should have seen the original one... :D
+
+Also, some parts may not follow standards, as I was exploring different approaches.
+
+Please let me know your thoughts and the things you would do differently.

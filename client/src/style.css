@@ -1,0 +1,102 @@
+body {
+    font-family: 'Palanquin', sans-serif;
+}
+
+h1 {
+    color: #003d5b
+}
+
+h3 {
+    color: #d1495b
+}
+
+a {
+    color: #00798c;
+}
+
+body {
+    background: #faead1;
+}
+
+.field-name {    
+    color: #30638e;
+    font-weight: 550;
+    font-size: 110%;
+}
+
+.btn-primary {
+    background-color: #edae49;
+    font-weight: 600;
+    border: none;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
+    background: #edae00;
+}
+
+.btn-secondary {
+    background-color: #004466;
+    font-weight: 600;
+    border: none;
+    color: white;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary:active:hover, .btn-secondary:active:focus {
+    background: #003d5b;
+    color: white;
+}
+
+.closed {
+    color: green;
+}
+
+.open {
+    color: red;
+}
+
+.close-button {
+    cursor: pointer;
+    font-size: 150%;
+    float: right;
+}
+
+.pagination > .active > a {
+    background: #003d5b;
+    border-color: #003d5b;
+}
+
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.opaque {
+    opacity: 1;
+}
+
+.link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.issues-box {
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    border: 1px solid black;
+    padding: 25px;
+    margin: 20px;
+    border-radius: 5px;
+    background: white;
+}
+
+.repo {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+}

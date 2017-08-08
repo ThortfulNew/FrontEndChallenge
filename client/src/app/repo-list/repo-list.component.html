@@ -1,0 +1,31 @@
+<h2 class="text-center">Repositories list</h2>
+
+<div ng-show="$ctrl.currentRepos.length" style="margin-top: 40px" class="row">
+    <div ng-repeat="repo in $ctrl.currentRepos track by $index" class="col-sm-5 repo" style="margin-bottom: 50px" ng-class="{'col-sm-offset-2': $index % 2 == 1}">
+        <h3>{{repo.full_name}}</h3>
+        <div style="min-height: 50px; font-size: 110%">{{repo.description | maxlength:250}}</div>
+        <p open-in-new-tab="{{repo.owner.html_url}}"><span class="field-name">Owner: </span>{{repo.owner.login}} <i class="fa fa-external-link" aria-hidden="true"></i></p>
+        <p><span class="field-name">Updated at: </span>{{repo.updated_at | date}}</p>
+        <p>
+            <span style="margin-right:30px" ng-show="repo.language"><i class="fa fa-code field-name" aria-hidden="true"></i> {{repo.language}}</span>
+            <span style="margin-right:30px"><i class="fa fa-star field-name" aria-hidden="true"></i>{{repo.stargazers_count}}</span>
+            <i class="fa fa-code-fork field-name" aria-hidden="true"></i>{{repo.forks}}
+        </p>
+        <div class="row" style="margin-top: 30px">
+            <div class="col-xs-4 col-sm-5 col-md-3">
+                <button class="btn btn-secondary" ng-click="$ctrl.displayIssues(repo.owner.login, repo.name, $index)">View issues</button>
+            </div>
+            <div class="col-xs-4 col-sm-5 col-md-3 col-md-offset-3 col-sm-offset-2">
+                <button open-in-new-tab="{{repo.html_url}}" style="float: right" class="btn btn-secondary">Visit repo <i class="fa fa-external-link" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="$ctrl.currentRepos.length" style="font-size: 130%">
+    No repositories found
+</div>
+
+<ul ng-if="$ctrl.pages.length > 1" class="pagination">
+    <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>
+</ul>

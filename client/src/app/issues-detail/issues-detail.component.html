@@ -1,0 +1,34 @@
+<div ng-show="$ctrl.currentIssues.length">
+
+    <h3>Issues in {{$ctrl.username + "/" + $ctrl.repo}}:</h3>
+
+    <div ng-repeat="issue in $ctrl.currentIssues" class="row">
+        <div class="col-sm-12" style="margin-bottom: 30px">
+            <a href="{{issue.html_url}}" target="_blank">
+                <h4>{{"Issue " + issue.number + ": " + issue.title}} <i class="fa fa-external-link" aria-hidden="true"></i></h4>
+            </a>
+            <p ng-show="issue.body" style="font-size: 110%">{{issue.body | maxlength:450}}</p>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p><span class="field-name">Created at: </span>{{issue.created_at | date}}</p>
+                    <p><span class="field-name">State: </span>{{issue.state}} <span class="glyphicon glyphicon-{{$ctrl.isClosed(issue) ? 'ok' : 'remove'}}"
+                            ng-class="{closed: $ctrl.isClosed(issue), open: !$ctrl.isClosed(issue)}"></span></p>
+
+                </div>
+                <div class="col-sm-3">
+                    <p ng-hide="$ctrl.isClosed(issue)"><span class="field-name">Updated at: </span>{{issue.updated_at | date}}</p>
+                    <p ng-show="$ctrl.isClosed(issue)"><span class="field-name">Closed at: </span>{{issue.closed_at | date}}</p>
+                    <p open-in-new-tab="{{issue.assignee.html_url}}" ng-if="issue.assignee"><span class="field-name">Assignee: </span>{{issue.assignee.login}} <i class="fa fa-external-link" aria-hidden="true"></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul ng-if="$ctrl.pages.length > 1" class="pagination">
+        <li ng-repeat="page in $ctrl.pages track by $index" ng-class="{active: $ctrl.isPageActive($index)}" ng-click="$ctrl.setPage($index)"><a href="#">{{$index + 1}}</a></li>
+    </ul>
+</div>
+
+<div ng-hide="$ctrl.currentIssues.length" style="padding: 20px; font-size: 130%">
+    No issues found in github.com/{{$ctrl.username + "/" + $ctrl.repo}}
+</div>
