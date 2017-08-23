@@ -24,6 +24,9 @@ We could be sneaky and not say anything else, but here's some things we're looki
 * Use of existing open source libraries
 * Something not looking like a web site from 1993s, We do like how the internet looks today :)
 
+By the way, if you find the Github API a tad too boring, pick something else you like. Without giving any hints, there are a few nice APIs available out there from Star Wars, Cats (of course), ...
+
+
 ### Submission notes
 
 You can just submit a PR here, create a private repo for free on [GitLab](https://www.gitlab.com/?gclid=CLCBmaWM474CFaMSwwodAqIAqw) or [Bitbucket](https://bitbucket.org/), or just send us the repo by email. Whatever you prefer.
