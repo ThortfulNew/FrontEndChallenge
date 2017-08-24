@@ -1,0 +1,60 @@
+<div id="search_box">
+
+    <!-- Header -->
+    <div class="row search_box_header" style="margin-top: 40px;">
+      <div class="col s4">
+        <img class="responsive-img" ng-src="img/logo.png" />
+      </div>
+      <div class="col s4 offset-s4">
+        <img class="responsive-img" ng-src="img/logo_repofinder.png" />
+      </div>
+    </div>
+
+    <!-- Input Search -->
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="text" class="validate" ng-model="query" ng-change="searchGithub()">
+            <label for="text">Search GitHub Repositories</label>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Results -->
+    <div class="row">
+
+      <div class="col s12 m12 l12" ng-if="empty">
+        <a class="tooltips" href="#">
+          No results
+          <span>Type in the box for search repositories</span></a>
+      </div>
+
+
+      <div class="col s12 m12 l12" ng-if="loadingAnimation && !empty">
+        <div class="progress" style="padding: 40px;">
+            <div class="indeterminate"></div>
+        </div>
+      </div>
+
+
+        <div class="col s12 m6" ng-if="!loadingAnimation && !empty" ng-repeat="repo in repos">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text valign-wrapper">
+                    <img ng-src="{{ repo.owner.avatar_url }}" alt="" class="circle responsive-img valign" style="width:50px; heigth:50px; margin-right: 20px;">
+                    <span class="card-title valign" style="font-size: 1.2em;">
+                      <a ng-href="http://google.es" style="color:white; font-weight:800;">{{ repo.owner.login }}</a> / <a ng-href="http://google.es" style="color:white; font-weight:450;">{{ repo.name }}</a>
+                    </span>
+                </div>
+            <div class="card-action" style="f">
+              {{ repo.description }}
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+
+
+</div>
