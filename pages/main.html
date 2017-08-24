@@ -1,0 +1,24 @@
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Search for repository..." ng-model="query" dl-enter-key="queryRepos()">
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button"
+      ng-click="queryRepos()">Go!
+    </button>
+  </span>
+</div>
+
+<div class="alert alert-warning" ng-if="headerInfo.rateLimit.remaining">
+  GitHub limits API queries; remaining: {{ headerInfo.rateLimit.remaining }}
+  (<a href="https://developer.github.com/v3/search/#rate-limit">more info</a>)
+</div>
+
+<h3>Search Results</h3>
+<div class="list-group">
+    <repo-directive repo="repo" ng-repeat="repo in repos"></repo-directive>
+</div>
+
+<button type="button" class="btn btn-default btn-lg"
+  ng-if="headerInfo.pagination.nextPage"
+  ng-click="queryNextPage()">
+  Load More
+</button>

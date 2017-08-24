@@ -1,0 +1,24 @@
+<h3>Repo Details</h3>
+<div>
+  <a class="h4 list-group-item-heading" href="{{repo.html_url}}">{{ repo.full_name }}</a>
+  <p class="list-group-item-text">{{ repo.description }}</p>
+  <p>
+    <span class="glyphicon glyphicon-star" aria-hidden="true">{{repo.stargazers_count}}</span>
+  </p>
+  <p ng-if="issues.length === 0">No issues to display.</p>
+  <div class="list-group">
+    <issue-directive issue="issue" ng-repeat="issue in issues"></issue-directive>
+  </div>
+  </a>
+  <div class="alert alert-warning" ng-if="headerInfo.rateLimit.remaining">
+    GitHub limits API queries; remaining: {{ headerInfo.rateLimit.remaining }}
+    (<a href="https://developer.github.com/v3/search/#rate-limit">more info</a>)
+  </div>
+
+  <button type="button" class="btn btn-default btn-lg"
+    ng-if="headerInfo.pagination.nextPage"
+    ng-click="queryNextPage()">
+    Load More
+  </button>
+
+</div>
