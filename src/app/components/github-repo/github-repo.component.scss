@@ -1,0 +1,16 @@
+.repo-information {
+  h1 {
+    text-transform: capitalize;
+  }
+  .repo-description {
+    margin-bottom: 10px;
+  }
+  .repo-image {
+    width: 100px;
+    margin: auto;
+  }
+  .toggle-btn.active {
+    color: #000;
+    background: transparent;
+  }
+}

@@ -1,0 +1,35 @@
+<button md-raised-button [routerLink]="['/']">Home <i class="material-icons">home</i></button>
+
+<div class="repo-information" *ngIf="repo">
+  <div class="repo-image">
+    <img [src]="repo.owner.avatar_url" class="responsive-img" [alt]="repo.full_name">
+  </div>
+  <h1>{{ repo.name }}</h1>
+  <div class="repo-description">
+    {{ repo.description }}
+    <div class="repo-website"><a [href]="repo.homepage" target="_blank">{{ repo.homepage }}</a></div>
+  </div>
+  <div class="repo-metadata">
+    <h4>Repository Meta Information</h4>
+    <div class="last-updated">Last Updated: {{ repo.updated_at | date }}</div>
+    <div class="language">Language: {{ repo.language }}</div>
+
+    <div class="forks">Total Forks: {{ repo.forks | number }}</div>
+    <div class="open-issues">Open Issues: {{ repo.open_issues_count | number }}</div>
+    <div class="stargazers">Stargazers: {{ repo.stargazers_count | number }}</div>
+    <div class="watchers">Watchers: {{ repo.watchers | number }}</div>
+
+    <a md-raised-button color="primary" [href]="repo.html_url" target="_blank">Visit Repo <i class="material-icons">open_in_new</i></a>
+    <button md-raised-button class="toggle-btn" [ngClass]="{active: activeToggle === 'issues'}" (click)="updateToggle('issues')"
+      color="primary">View Issues</button>
+    <button md-raised-button class="toggle-btn" [ngClass]="{active: activeToggle === 'charts'}" (click)="updateToggle('charts')"
+      color="primary">View Charts</button>
+
+  </div>
+
+  <div class="repo-toggles">
+    <app-github-repo-issues *ngIf="activeToggle === 'issues'" [repo]="repo"></app-github-repo-issues>
+    <app-github-repo-charts *ngIf="activeToggle === 'charts'" [repo]="repo"></app-github-repo-charts>
+  </div>
+
+</div>

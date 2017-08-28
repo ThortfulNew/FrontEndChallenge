@@ -1,0 +1,29 @@
+<div class="issues-wrap">
+  <h2>Issues</h2>
+
+  <div class="issues-wrap" *ngIf="issues; then issuesList else noIssues"></div>
+</div>
+
+<ng-template #issuesList>
+  <md-card class="example-card" *ngFor="let issue of issues">
+    <md-card-header>
+      <md-card-title>
+        <h1>Issue# {{ issue.number }}: {{ issue.title }}</h1>
+      </md-card-title>
+      <md-card-subtitle>
+        <a md-button [href]="issue.user.html_url" target="_blank">{{ issue.user.login }}</a></md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <p [innerHTML]="issue.body"></p>
+    </md-card-content>
+    <md-card-actions>
+      <md-chip-list>
+        <md-chip color="secondary">Created: {{ issue.created_at | date }}</md-chip>
+        <md-chip color="secondary">Uodated: {{ issue.updated_at | date}}</md-chip>
+      </md-chip-list>
+      <a [href]="issue.html_url" color="accent" target="_blank" md-raised-button>View Issue</a>
+      <a [href]="issue.user.html_url" color="accent" target="_blank" md-raised-button>View User</a>
+    </md-card-actions>
+  </md-card>
+</ng-template>
+<ng-template #noIssues>No open issues available.</ng-template>
