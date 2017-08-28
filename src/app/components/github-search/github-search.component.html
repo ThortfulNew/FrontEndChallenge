@@ -1,0 +1,29 @@
+<div class="search-wrap">
+  <form>
+    <md-input-container class="full-width">
+      <input mdInput name="term" [(ngModel)]="term" placeholder="Search for a repository" value="">
+    </md-input-container>
+
+    <button (click)="doSearch()" md-raised-button>Search</button>
+  </form>
+
+  <md-list class="search-result">
+    <h3 md-subheader>Results</h3>
+
+    <div class="result-list" *ngIf="results.items; then resultList else noList"></div>
+
+    <ng-template #resultList>
+      <a md-raised-button color="primary" [routerLink]="['/repo', result.owner.login, result.name]" class="result-link" *ngFor="let result of results.items">
+        <md-list-item>
+          <h4 md-line>{{result.name}} / {{ result.full_name }}</h4>
+          <p md-line> {{result.created_at | date}} </p>
+        </md-list-item>
+      </a>
+    </ng-template>
+
+    <ng-template #noList>
+      No results found
+    </ng-template>
+
+  </md-list>
+</div>

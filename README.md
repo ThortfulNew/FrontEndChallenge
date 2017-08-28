@@ -1,36 +1,34 @@
-# Thortful Front End Fever
+# Thortful - FrontEndChallenge
 
-Show us what you can do and how clean your code is! Write a JavaScript / Coffeescript app using AngularJS that will allow a user to search a repository by name and display a repository's relevant information such as URL, description, forks count, stargazers count, open issues count etc.
+A live firebase link is available here: https://thortful-ee6c1.firebaseapp.com/index
 
-Also, display the available issues of a repository in a separate section in the UI:
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.1.
 
-* Implement the best design possible for the user interface - search and search results, and issues section.
-* You can use Twitter Bootstrap and any JavaScript libraries to support AngularJS (Underscore etc).
-* Use best practices in writing JavaScript / Coffeescript, CSS, and HTML.
-* Write clearly and use proper MVC structure to write the application.
+## The Stack
+-Angular CLI: 1.3.1
 
-Bonus: Add another section for visualisation chart (using a JavaScript charting library that you already know) for the number of forks, open issues, stargazer count, watchers count, or any relevant information about the repository.
+-Angular 4.2.4
 
-Few useful URLs:
-* Sample API URL to search by repository name	https://api.github.com/search/repositories?q=bootstrap
-* API URL to display issues of a repository name	https://api.github.com/search/issues?q=repo:username/reponame
-* Example: Display Issues of Bootstrap	https://api.github.com/search/issues?q=repo:twbs/bootstrap
-* API Documentation	https://developer.github.com/v3/search/#search-issues
-* GItHub Search API Documentation	https://developer.github.com/v3/search/ 
+-Angular Material
 
-We could be sneaky and not say anything else, but here's some things we're looking to see:
+-Highcharts
 
-* An app we can try :)
-* Use of existing open source libraries
-* Something not looking like a web site from 1993s, We do like how the internet looks today :)
+-Firebase
 
-By the way, if you find the Github API a tad too boring, pick something else you like. Without giving any hints, there are a few nice APIs available out there from Star Wars, Cats (of course), ...
+-Typescript
 
+-SCSS
 
-### Submission notes
+## Pre-requisites
 
-You can just submit a PR here, create a private repo for free on [GitLab](https://www.gitlab.com/?gclid=CLCBmaWM474CFaMSwwodAqIAqw) or [Bitbucket](https://bitbucket.org/), or just send us the repo by email. Whatever you prefer.
+Must have Node installed (this project was built using Node v8)
+Must have a node package manager installed (npm or yarn).
 
----
+## How to install 
 
-[@HowThortful](https://thortful.com) - 2015
+To install simply run the following command with either yarn or npm (Yarn is used specifically in this demo):
+Yarn - `yarn install` or simply `yarn` 
+npm - `npm install`
+
+## Run server locally
+Simply run `yarn run start` or `npm run start`. This will load a local development server, simply navigate to `http://localhost:4200` to view the app.
