@@ -1,0 +1,14 @@
+<form class="search-bar" role="search" ng-submit="$ctrl.submit($event)">
+  <i class="bi bi-search search-icon" aria-hidden="true"></i>
+  <input
+    class="form-control"
+    type="search"
+    placeholder="Search GitHub repositories — try “bootstrap”"
+    aria-label="Search repositories"
+    autocomplete="off"
+    ng-model="$ctrl.query"
+    ng-change="$ctrl.search()">
+  <button class="btn btn-brand" type="submit">
+    <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i> Search
+  </button>
+</form>

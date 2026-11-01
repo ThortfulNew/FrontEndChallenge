@@ -1,0 +1,32 @@
+<article
+  class="repo-card"
+  ng-class="{ 'is-active': $ctrl.active }"
+  role="button"
+  tabindex="0"
+  ng-click="$ctrl.select()"
+  ng-keydown="$event.key === 'Enter' && $ctrl.select()">
+
+  <header class="repo-card-head">
+    <img class="repo-avatar" ng-src="{{::$ctrl.repo.owner.avatar_url}}" alt="" loading="lazy">
+    <div class="repo-card-titles">
+      <h3 class="repo-name">{{::$ctrl.repo.full_name | stripTags}}</h3>
+      <a class="repo-url"
+         href="{{::$ctrl.repo.html_url}}"
+         target="_blank"
+         rel="noopener"
+         ng-click="$event.stopPropagation()">
+        {{::$ctrl.repo.html_url | stripTags}} <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+      </a>
+    </div>
+  </header>
+
+  <p class="repo-desc">{{::($ctrl.repo.description | stripTags) || 'No description provided.'}}</p>
+
+  <ul class="repo-stats">
+    <li title="Stars"><i class="bi bi-star-fill" aria-hidden="true"></i>{{::$ctrl.repo.stargazers_count | compactNumber}}</li>
+    <li title="Forks"><i class="bi bi-git" aria-hidden="true"></i>{{::$ctrl.repo.forks_count | compactNumber}}</li>
+    <li title="Watchers"><i class="bi bi-eye-fill" aria-hidden="true"></i>{{::($ctrl.repo.subscribers_count || $ctrl.repo.watchers_count) | compactNumber}}</li>
+    <li title="Open issues"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>{{::$ctrl.repo.open_issues_count | compactNumber}}</li>
+    <li class="repo-lang" ng-if="::$ctrl.repo.language"><span class="lang-dot" aria-hidden="true"></span>{{::$ctrl.repo.language}}</li>
+  </ul>
+</article>

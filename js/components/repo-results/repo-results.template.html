@@ -1,0 +1,37 @@
+<section class="panel results-panel" aria-live="polite">
+  <div class="panel-head">
+    <h2><i class="bi bi-collection" aria-hidden="true"></i> Search results</h2>
+    <span class="panel-count" ng-if="$ctrl.state.searched && !$ctrl.state.loading">
+      {{ $ctrl.state.results.length }} repositories
+    </span>
+  </div>
+
+  <div class="panel-body">
+    <div class="state-block" ng-if="$ctrl.state.loading">
+      <div class="spinner-border text-brand" role="status">
+        <span class="visually-hidden">Searching…</span>
+      </div>
+      <p>Searching GitHub…</p>
+    </div>
+
+    <div class="state-block" ng-if="!$ctrl.state.loading && $ctrl.state.error">
+      <i class="bi bi-exclamation-triangle state-icon text-brand" aria-hidden="true"></i>
+      <p>{{$ctrl.state.error}}</p>
+    </div>
+
+    <div class="state-block" ng-if="!$ctrl.state.loading && !$ctrl.state.error && !$ctrl.state.results.length">
+      <i class="bi bi-rocket-takeoff state-icon" aria-hidden="true"></i>
+      <p ng-if="!$ctrl.state.searched">Type at least two characters to search GitHub repositories.</p>
+      <p ng-if="$ctrl.state.searched">No repositories found for “{{$ctrl.state.query}}”.</p>
+    </div>
+
+    <div class="results-list" ng-if="!$ctrl.state.loading && !$ctrl.state.error && $ctrl.state.results.length">
+      <repo-card
+        ng-repeat="repo in $ctrl.state.results track by repo.id"
+        repo="repo"
+        active="$ctrl.isSelected(repo)"
+        on-select="$ctrl.select(repo)">
+      </repo-card>
+    </div>
+  </div>
+</section>

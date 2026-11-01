@@ -1,0 +1,53 @@
+<section class="panel detail-panel">
+  <div class="panel-head">
+    <h2><i class="bi bi-graph-up-arrow" aria-hidden="true"></i> Repository overview</h2>
+  </div>
+
+  <div class="panel-body">
+    <div class="state-block" ng-if="!$ctrl.store.repo">
+      <i class="bi bi-hand-index-thumb state-icon" aria-hidden="true"></i>
+      <p>Pick a repository from the results to see its stats and a visual breakdown.</p>
+    </div>
+
+    <div ng-if="$ctrl.store.repo">
+      <div class="detail-head">
+        <img class="detail-avatar" ng-src="{{$ctrl.store.repo.owner.avatar_url}}" alt="">
+        <div class="detail-titles">
+          <h3 class="detail-name">{{$ctrl.store.repo.full_name | stripTags}}</h3>
+          <a class="detail-link" href="{{$ctrl.store.repo.html_url}}" target="_blank" rel="noopener">
+            Open on GitHub <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <p class="detail-desc">{{($ctrl.store.repo.description | stripTags) || 'No description provided.'}}</p>
+
+      <div class="topic-row" ng-if="$ctrl.store.repo.topics.length">
+        <span class="topic" ng-repeat="topic in $ctrl.store.repo.topics track by $index">{{::topic}}</span>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat stat-orange">
+          <span class="stat-value">{{$ctrl.store.repo.stargazers_count | compactNumber}}</span>
+          <span class="stat-label"><i class="bi bi-star-fill" aria-hidden="true"></i> Stars</span>
+        </div>
+        <div class="stat stat-slate">
+          <span class="stat-value">{{$ctrl.store.repo.forks_count | compactNumber}}</span>
+          <span class="stat-label"><i class="bi bi-git" aria-hidden="true"></i> Forks</span>
+        </div>
+        <div class="stat stat-teal">
+          <span class="stat-value">{{($ctrl.store.repo.subscribers_count != null ? $ctrl.store.repo.subscribers_count : $ctrl.store.repo.watchers_count) | compactNumber}}</span>
+          <span class="stat-label"><i class="bi bi-eye-fill" aria-hidden="true"></i> Watchers</span>
+        </div>
+        <div class="stat stat-pink">
+          <span class="stat-value">{{$ctrl.store.repo.open_issues_count | compactNumber}}</span>
+          <span class="stat-label"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> Open issues</span>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas class="repo-chart" height="220" role="img" aria-label="Bar chart of repository metrics"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
