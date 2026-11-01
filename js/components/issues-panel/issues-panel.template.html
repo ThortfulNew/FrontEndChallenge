@@ -1,0 +1,50 @@
+<section class="panel issues-panel">
+  <div class="panel-head">
+    <h2><i class="bi bi-bug" aria-hidden="true"></i> Issues</h2>
+    <span class="panel-count" ng-if="$ctrl.store.repo && $ctrl.issues.length">
+      latest {{ $ctrl.issues.length }} in {{$ctrl.store.repo.full_name | stripTags}}
+    </span>
+  </div>
+
+  <div class="panel-body">
+    <div class="state-block" ng-if="!$ctrl.store.repo">
+      <i class="bi bi-chat-left-text state-icon" aria-hidden="true"></i>
+      <p>Issues appear here once you select a repository.</p>
+    </div>
+
+    <div class="state-block" ng-if="$ctrl.store.repo && $ctrl.loading">
+      <div class="spinner-border text-brand" role="status">
+        <span class="visually-hidden">Loading issues…</span>
+      </div>
+      <p>Loading issues…</p>
+    </div>
+
+    <div class="state-block" ng-if="$ctrl.store.repo && !$ctrl.loading && $ctrl.error">
+      <i class="bi bi-exclamation-triangle state-icon text-brand" aria-hidden="true"></i>
+      <p>{{$ctrl.error}}</p>
+    </div>
+
+    <div class="state-block" ng-if="$ctrl.store.repo && !$ctrl.loading && !$ctrl.error && !$ctrl.issues.length">
+      <i class="bi bi-emoji-smile state-icon" aria-hidden="true"></i>
+      <p>No issues found for this repository.</p>
+    </div>
+
+    <ul class="issues-list" ng-if="$ctrl.store.repo && !$ctrl.loading && !$ctrl.error && $ctrl.issues.length">
+      <li class="issue" ng-repeat="issue in $ctrl.issues track by issue.id">
+        <i class="bi issue-icon {{$ctrl.iconFor(issue)}}" ng-class="$ctrl.stateClass(issue)" aria-hidden="true"></i>
+        <div class="issue-body">
+          <a class="issue-title" href="{{::issue.html_url}}" target="_blank" rel="noopener">
+            {{::issue.title | stripTags}}
+          </a>
+          <p class="issue-meta">
+            #{{::issue.number}} · by <strong>{{::issue.user.login}}</strong> ·
+            <i class="bi bi-chat-left" aria-hidden="true"></i> {{::issue.comments}} comments ·
+            updated {{::issue.updated_at | date:'d MMM yyyy'}}
+            <span class="issue-tag" ng-if="::issue.pull_request">pull request</span>
+          </p>
+        </div>
+        <span class="issue-state" ng-class="$ctrl.stateClass(issue)">{{::issue.state}}</span>
+      </li>
+    </ul>
+  </div>
+</section>
